@@ -1,11 +1,10 @@
 [@react.component]
 let make = () => {
-  let machine1: LoadBalancing.machine = {jobs: [1, 3], load: 4};
-  let machine2: LoadBalancing.machine = {jobs: [2], load: 2};
-  let test_machines = [|machine1, machine2|];
+  let jobs = [|1, 2, 3|];
+  let m = 2;
+  let result = LoadBalancing.greedy(jobs, m);
 
   <Layout>
-    <BarPlot machines=test_machines />
-    // <SimpleComponent name={myname} />
+    <BarPlot machines=result />
   </Layout>
 };

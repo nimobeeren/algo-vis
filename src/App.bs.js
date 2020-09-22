@@ -3,32 +3,18 @@
 var React = require("react");
 var Layout$AlgoVis = require("./Layout.bs.js");
 var BarPlot$AlgoVis = require("./BarPlot.bs.js");
+var LoadBalancing$AlgoVis = require("./LoadBalancing.bs.js");
 
 function App(Props) {
-  var machine1 = {
-    jobs: {
-      hd: 1,
-      tl: {
-        hd: 3,
-        tl: /* [] */0
-      }
-    },
-    load: 4
-  };
-  var machine2 = {
-    jobs: {
-      hd: 2,
-      tl: /* [] */0
-    },
-    load: 2
-  };
-  var test_machines = [
-    machine1,
-    machine2
+  var jobs = [
+    1,
+    2,
+    3
   ];
+  var result = LoadBalancing$AlgoVis.greedy(jobs, 2);
   return React.createElement(Layout$AlgoVis.make, {
               children: React.createElement(BarPlot$AlgoVis.make, {
-                    machines: test_machines
+                    machines: result
                   })
             });
 }
