@@ -9,18 +9,18 @@ function App(Props) {
     jobs: {
       hd: 1,
       tl: {
-        hd: 2,
+        hd: 3,
         tl: /* [] */0
       }
     },
-    load: 3
+    load: 4
   };
   var machine2 = {
     jobs: {
-      hd: 3,
+      hd: 2,
       tl: /* [] */0
     },
-    load: 3
+    load: 2
   };
   var test_machines = [
     machine1,
