@@ -1,0 +1,1 @@
+- render individual jobs instead of single bar per machine
