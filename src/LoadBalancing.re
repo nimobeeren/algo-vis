@@ -1,15 +1,15 @@
 type job = int;
 type machine = {
-  mutable jobs: list(job),
-  mutable load: int,
+  jobs: list(job),
+  load: int,
 };
 
 let create_machine: unit => machine = () => {jobs: [], load: 0};
 
-let assign: (job, machine) => unit =
+// Creates a new machine with an added job
+let assign: (job, machine) => machine =
   (job, machine) => {
-    machine.jobs = [job, ...machine.jobs];
-    machine.load = machine.load + job;
+    {jobs: [job, ...machine.jobs], load: machine.load + job};
   };
 
 // Greedy algorithm that assigns each job to the machine with the smallest load
@@ -23,7 +23,7 @@ let greedy: (array(job), int) => array(machine) =
       job => {
         // TODO: machine with smallest load could be maintained using a min-heap
         Array.sort((a, b) => a.load - b.load, machines);
-        assign(job, machines[0]);
+        machines[0] = assign(job, machines[0]);
       },
       jobs,
     );

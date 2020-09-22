@@ -11,12 +11,13 @@ function create_machine(param) {
 }
 
 function assign(job, machine) {
-  machine.jobs = {
-    hd: job,
-    tl: machine.jobs
-  };
-  machine.load = machine.load + job | 0;
-  
+  return {
+          jobs: {
+            hd: job,
+            tl: machine.jobs
+          },
+          load: machine.load + job | 0
+        };
 }
 
 function greedy(jobs, m) {
@@ -30,7 +31,7 @@ function greedy(jobs, m) {
           $$Array.sort((function (a, b) {
                   return a.load - b.load | 0;
                 }), machines);
-          return assign(job, Caml_array.caml_array_get(machines, 0));
+          return Caml_array.caml_array_set(machines, 0, assign(job, Caml_array.caml_array_get(machines, 0)));
         }), jobs);
   return machines;
 }
