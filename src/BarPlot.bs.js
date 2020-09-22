@@ -24,6 +24,7 @@ function BarPlot(Props) {
             }, $$Array.map((function (machine) {
                     var height = machine.load / makespan * 100;
                     return React.createElement("div", {
+                                key: String(machine.id),
                                 style: Object.assign({}, barStyle, {
                                       height: height.toString() + "%"
                                     })

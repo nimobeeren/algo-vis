@@ -23,6 +23,7 @@ let make = (~machines: array(LoadBalancing.machine)) => {
            let height =
              float_of_int(machine.load) /. float_of_int(makespan) *. 100.;
            <div
+             key=string_of_int(machine.id)
              style={ReactDOM.Style.combine(
                barStyle,
                ReactDOM.Style.make(

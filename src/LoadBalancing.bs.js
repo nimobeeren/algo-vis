@@ -3,8 +3,9 @@
 var $$Array = require("bs-platform/lib/js/array.js");
 var Caml_array = require("bs-platform/lib/js/caml_array.js");
 
-function create_machine(param) {
+function create_machine(id) {
   return {
+          id: id,
           jobs: /* [] */0,
           load: 0
         };
@@ -12,6 +13,7 @@ function create_machine(param) {
 
 function assign(job, machine) {
   return {
+          id: machine.id,
           jobs: {
             hd: job,
             tl: machine.jobs
@@ -21,12 +23,7 @@ function assign(job, machine) {
 }
 
 function greedy(jobs, m) {
-  var machines = $$Array.init(m, (function (param) {
-          return {
-                  jobs: /* [] */0,
-                  load: 0
-                };
-        }));
+  var machines = $$Array.init(m, create_machine);
   $$Array.iter((function (job) {
           $$Array.sort((function (a, b) {
                   return a.load - b.load | 0;
