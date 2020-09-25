@@ -7,9 +7,9 @@ var LoadBalancing$AlgoVis = require("./LoadBalancing.bs.js");
 
 function App(Props) {
   var jobs = [
-    1,
+    3,
     2,
-    3
+    1
   ];
   var result = LoadBalancing$AlgoVis.greedy(jobs, 2);
   return React.createElement(Layout$AlgoVis.make, {

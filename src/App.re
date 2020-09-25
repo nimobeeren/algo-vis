@@ -1,10 +1,8 @@
 [@react.component]
 let make = () => {
-  let jobs = [|1, 2, 3|];
+  let jobs = [|3, 2, 1|];
   let m = 2;
   let result = LoadBalancing.greedy(jobs, m);
 
-  <Layout>
-    <BarPlot machines=result />
-  </Layout>
+  <Layout> <BarPlot machines=result /> </Layout>;
 };
