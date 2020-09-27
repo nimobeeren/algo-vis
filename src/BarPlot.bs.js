@@ -1,5 +1,6 @@
 'use strict';
 
+var List = require("bs-platform/lib/js/list.js");
 var $$Array = require("bs-platform/lib/js/array.js");
 var React = require("react");
 var Job$AlgoVis = require("./Job.bs.js");
@@ -22,17 +23,17 @@ function BarPlot(Props) {
                     return React.createElement("div", {
                                 key: String(machine.id),
                                 style: {
-                                  border: "1px solid",
                                   display: "flex",
                                   height: height.toString() + "%",
                                   flexFlow: "column nowrap",
                                   flexGrow: "1"
                                 }
-                              }, $$Array.map((function (job) {
+                              }, $$Array.init(List.length(machine.jobs), (function (i) {
                                       return React.createElement(Job$AlgoVis.make, {
-                                                  size: job
+                                                  size: List.nth(machine.jobs, i),
+                                                  color: i + Math.imul(machine.id, Job$AlgoVis.possibleColors.length - 1 | 0) | 0
                                                 });
-                                    }), $$Array.of_list(machine.jobs)));
+                                    })));
                   }), machines));
 }
 

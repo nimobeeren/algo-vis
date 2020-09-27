@@ -26,15 +26,18 @@ let make = (~machines: array(LoadBalancing.machine)) => {
                ~display="flex",
                ~flexFlow="column nowrap",
                ~flexGrow="1",
-               ~border="1px solid",
                ~height=Js.Float.toString(height) ++ "%",
                (),
              )}>
              {React.array(
-                Array.map(
-                  job => <Job size=job />,
-                  Array.of_list(machine.jobs),
-                ),
+                Array.init(List.length(machine.jobs), i => {
+                  <Job
+                    size={List.nth(machine.jobs, i)}
+                    color={
+                      i + machine.id * (Array.length(Job.possibleColors) - 1)
+                    }
+                  />
+                }),
               )}
            </div>;
          },
