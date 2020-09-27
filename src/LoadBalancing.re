@@ -15,6 +15,7 @@ let assign: (job, machine) => machine =
 
 // Greedy algorithm that assigns each job to the machine with the smallest load
 // at that time
+// Running time: O(n^2 log n)
 let greedy: (array(job), int) => array(machine) =
   (jobs, m) => {
     let machines: array(machine) = Array.init(m, create_machine);
@@ -22,8 +23,9 @@ let greedy: (array(job), int) => array(machine) =
     // Assign each job to the machine with smallest load
     Array.iter(
       job => {
-        // TODO: machine with smallest load could be maintained using a min-heap
-        Array.sort((a, b) => a.load - b.load, machines);
+        // TODO: machine with smallest load could be maintained using a min-heap,
+        // which would be faster than sorting the array every time
+        Array.fast_sort((a, b) => a.load - b.load, machines);
         machines[0] = assign(job, machines[0]);
       },
       jobs,
@@ -34,6 +36,6 @@ let greedy: (array(job), int) => array(machine) =
 // The makespan is the maximum load across all machines
 let get_makespan: array(machine) => int =
   machines => {
-    Array.sort((a, b) => b.load - a.load, machines);
+    Array.fast_sort((a, b) => b.load - a.load, machines);
     machines[0].load;
   };
