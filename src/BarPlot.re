@@ -12,7 +12,7 @@ let style =
 
 [@react.component]
 let make = (~machines: array(LoadBalancing.machine)) => {
-  let makespan = LoadBalancing.get_makespan(machines);
+  let makespan = LoadBalancing.getMakespan(machines);
 
   <div style>
     {React.array(

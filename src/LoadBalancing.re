@@ -5,7 +5,7 @@ type machine = {
   load: int,
 };
 
-let create_machine: int => machine = id => {id, jobs: [], load: 0};
+let createMachine: int => machine = id => {id, jobs: [], load: 0};
 
 // Produces a machine that is identical to the given machine, but with the given job added
 let assign: (job, machine) => machine =
@@ -18,7 +18,7 @@ let assign: (job, machine) => machine =
 // Running time: O(n^2 log n)
 let greedy: (array(job), int) => array(machine) =
   (jobs, m) => {
-    let machines: array(machine) = Array.init(m, create_machine);
+    let machines: array(machine) = Array.init(m, createMachine);
 
     // Assign each job to the machine with smallest load
     Array.iter(
@@ -34,7 +34,7 @@ let greedy: (array(job), int) => array(machine) =
   };
 
 // The makespan is the maximum load across all machines
-let get_makespan: array(machine) => int =
+let getMakespan: array(machine) => int =
   machines => {
     Array.fast_sort((a, b) => b.load - a.load, machines);
     machines[0].load;
