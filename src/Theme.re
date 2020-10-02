@@ -21,7 +21,7 @@ let fontSizes = {
 };
 
 let borders = {
-  "500": "1.5px solid " ++ colors##dark
+  "regular": "2px solid " ++ colors##dark
 };
 
 let fonts = {

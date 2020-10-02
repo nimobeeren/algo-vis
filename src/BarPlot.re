@@ -33,9 +33,6 @@ let make = (~machines: array(LoadBalancing.machine)) => {
                 Array.init(List.length(machine.jobs), i => {
                   <Job
                     size={List.nth(machine.jobs, i)}
-                    color={
-                      i + machine.id * (Array.length(Job.possibleColors) - 1)
-                    }
                   />
                 }),
               )}
