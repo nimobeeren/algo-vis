@@ -5,13 +5,13 @@ let colors = {
   "light": "#FFFFFF",
 };
 
-let space = {
-  "1": "4px",
-  "2": "8px",
-  "4": "16px",
-  "8": "32px",
-  "16": "64px"
-};
+let space = [|
+  "4px",
+  "8px",
+  "16px",
+  "32px",
+  "64px"
+|];
 
 let fontSizes = {
   "sm": "14px",
@@ -22,11 +22,6 @@ let fontSizes = {
 
 let borders = {
   "500": "1.5px solid " ++ colors##dark
-};
-
-let radii = {
-  "2": space##"2",
-  "4": space##"4"
 };
 
 let fonts = {
