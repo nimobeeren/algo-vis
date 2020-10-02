@@ -6,6 +6,7 @@ let make = () => {
   let (numJobs, setNumJobs) = React.useState(() => 6);
 
   let result = LoadBalancing.greedy(jobs, numMachines);
+  let makespan = LoadBalancing.getMakespan(result);
 
   <Layout>
     <div
@@ -66,7 +67,13 @@ let make = () => {
           )}>
           {React.array(
              Array.init(numJobs, i =>
-               <input type_="number" key={"job-" ++ string_of_int(i)} defaultValue="1" min="1" max="999" />
+               <input
+                 type_="number"
+                 key={"job-" ++ string_of_int(i)}
+                 defaultValue="1"
+                 min="1"
+                 max="999"
+               />
              ),
            )}
         </div>
@@ -90,7 +97,16 @@ let make = () => {
     </div>
     <div
       style={ReactDOM.Style.make(~width="272px", ~padding=Theme.space[3], ())}>
-      {React.string("Result")}
+      <label> {React.string("Result")} </label>
+      <p
+        style={ReactDOM.Style.make(
+          ~color=Theme.colors##primary,
+          ~fontSize=Theme.fontSizes##xl,
+          (),
+        )}>
+        {React.int(makespan)}
+      </p>
+      <p> {React.string("Actual running time: 69 ms")} </p>
     </div>
   </Layout>;
 };
