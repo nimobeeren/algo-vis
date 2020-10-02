@@ -1,20 +1,20 @@
 // Need to open the module to avoid "unbound record field" on machine
 open LoadBalancing;
 
-let style =
-  ReactDOM.Style.make(
-    ~display="flex",
-    ~alignItems="flex-end",
-    ~height="500px",
-    ~width="100%",
-    (),
-  );
-
 [@react.component]
 let make = (~machines: array(LoadBalancing.machine)) => {
   let makespan = LoadBalancing.getMakespan(machines);
 
-  <div style>
+  <div
+    style={ReactDOM.Style.make(
+      ~display="flex",
+      ~flexFlow="row nowrap",
+      ~gridGap=Theme.space[3],
+      ~alignItems="flex-end",
+      ~height="480px",
+      ~width="100%",
+      (),
+    )}>
     {React.array(
        Array.map(
          machine => {
@@ -31,9 +31,7 @@ let make = (~machines: array(LoadBalancing.machine)) => {
              )}>
              {React.array(
                 Array.init(List.length(machine.jobs), i => {
-                  <Job
-                    size={List.nth(machine.jobs, i)}
-                  />
+                  <Job size={List.nth(machine.jobs, i)} />
                 }),
               )}
            </div>;

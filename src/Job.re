@@ -1,7 +1,7 @@
 [@react.component]
 let make = (~size) => {
   <div
-    style={ReactDOMRe.Style.make(
+    style={ReactDOM.Style.make(
       ~display="flex",
       ~justifyContent="center",
       ~alignItems="center",

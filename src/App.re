@@ -1,8 +1,8 @@
 [@react.component]
 let make = () => {
-  let jobs = [|3, 2, 1|];
+  let jobs = [|4, 3, 3, 3, 2, 1|];
 
-  let (numMachines, setNumMachines) = React.useState(() => 2);
+  let (numMachines, setNumMachines) = React.useState(() => 4);
   
   let result = LoadBalancing.greedy(jobs, numMachines);
 
@@ -16,6 +16,12 @@ let make = () => {
         setNumMachines(ReactEvent.Form.target(event)##value);
       }}
     />
-    <BarPlot machines=result />
+    <div style={ReactDOM.Style.make(
+      ~margin=Theme.space[4],
+      ~padding="0 " ++ Theme.space[3], 
+      ()
+    )}>
+      <BarPlot machines=result />
+    </div>
   </Layout>;
 };
