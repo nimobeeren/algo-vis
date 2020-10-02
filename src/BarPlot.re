@@ -2,7 +2,7 @@
 open LoadBalancing;
 
 [@react.component]
-let make = (~machines: array(LoadBalancing.machine)) => {
+let make = (~machines: array(machine)) => {
   let makespan = LoadBalancing.getMakespan(machines);
 
   <div
@@ -23,9 +23,9 @@ let make = (~machines: array(LoadBalancing.machine)) => {
            <div
              key={string_of_int(machine.id)}
              style={ReactDOM.Style.make(
+               ~flexGrow="1",
                ~display="flex",
                ~flexFlow="column nowrap",
-               ~flexGrow="1",
                ~height=Js.Float.toString(height) ++ "%",
                (),
              )}>

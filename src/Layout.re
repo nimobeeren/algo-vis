@@ -1,13 +1,15 @@
-let style =
-  ReactDOM.Style.make(
-    ~maxWidth="800px",
-    ~margin="0 auto",
-    ~padding="32px",
-    ~fontFamily=Theme.fonts##body,
-    (),
-  );
-
 [@react.component]
 let make = (~children) => {
-  <div style> children </div>;
+  <div
+    style={ReactDOM.Style.make(
+      ~display="flex",
+      ~flexFlow="row nowrap",
+      ~justifyContent="center",
+      ~height="648px",
+      ~margin="128px 72px",
+      ~fontFamily=Theme.fonts##body,
+      (),
+    )}>
+    children
+  </div>;
 };
