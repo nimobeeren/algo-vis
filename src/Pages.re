@@ -81,7 +81,7 @@ module Home = {
         <div className="group">
           <label> {React.string("Job sizes")} </label>
           <div className="job-inputs">
-            <MultiNumberInputContainer
+            <MultiNumberInput
               value=jobs
               onChange={newValue => setJobs(_ => newValue)}
             />

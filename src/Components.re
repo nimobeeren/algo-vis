@@ -46,7 +46,7 @@ module BarPlot = {
   };
 };
 
-module MultiNumberInputContainer = {
+module MultiNumberInput = {
   [@react.component]
   let make = (~value, ~onChange) => {
     <>
