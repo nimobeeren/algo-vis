@@ -1,1 +1,2 @@
 - run expensive computations async, and time out after a while
+- make jobs width independent of text content

@@ -3,10 +3,26 @@ open Components;
 module Home = {
   [@react.component]
   let make = () => {
-    let jobs = [|4, 3, 3, 3, 2, 1|];
-
     let (numMachines, setNumMachines) = React.useState(() => 4);
     let (numJobs, setNumJobs) = React.useState(() => 6);
+    let (jobs, setJobs) = React.useState(() => [|4, 3, 3, 3, 2, 1|]);
+
+    React.useEffect2(() => {
+      Js.log(jobs);
+      let numJobsInState = Array.length(jobs);
+      if (numJobsInState > numJobs) {
+        // We have too many jobs, so we drop some jobs off the end
+        setJobs(oldJobs => Array.sub(oldJobs, 0, numJobs));
+      } else if (numJobsInState < numJobs) {
+        // We don't have enough jobs, so we add more
+        setJobs(oldJobs => {
+          let defaultJobValue = 1;
+          let jobsToAdd = Array.make(numJobs - numJobsInState, defaultJobValue);
+          Array.append(oldJobs, jobsToAdd);
+        })
+      }
+      None;
+    }, (numJobs, jobs));
 
     let result = LoadBalancing.greedy(jobs, numMachines);
     let makespan = LoadBalancing.getMakespan(result);
@@ -19,7 +35,11 @@ module Home = {
             <option> {React.string("Greedy")} </option>
           </select>
           <div className="group__bottom-text">
-            <p> {React.string("Worst-case running time: O(n")} <sup>{React.string("2")}</sup> {React.string(")")} </p>
+            <p>
+              {React.string("Worst-case running time: O(n")}
+              <sup> {React.string("2")} </sup>
+              {React.string(")")}
+            </p>
             <p> {React.string("Approximation ratio: 2 - 1/m")} </p>
           </div>
         </div>
@@ -56,17 +76,14 @@ module Home = {
         <div className="group">
           <label> {React.string("Job sizes")} </label>
           <div className="job-inputs">
-            {React.array(
-               Array.init(numJobs, i =>
-                 <input
-                   type_="number"
-                   key={"job-" ++ string_of_int(i)}
-                   defaultValue="1"
-                   min="1"
-                   max="999"
-                 />
-               ),
-             )}
+            <MultiNumberInputContainer
+              values=jobs
+              onChange={(i, newValue) => setJobs(oldJobs => {
+                let newJobs = Array.copy(oldJobs);
+                newJobs[i] = newValue;
+                newJobs;
+              })}
+            />
           </div>
         </div>
       </aside>

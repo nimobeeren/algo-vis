@@ -9,7 +9,7 @@ module Job = {
         (),
       )}>
       <div className="bucket__cover" />
-      <div>{React.int(size)}</div>
+      <div> {React.int(size)} </div>
     </div>;
   };
 };
@@ -43,5 +43,25 @@ module BarPlot = {
          ),
        )}
     </div>;
+  };
+};
+
+module MultiNumberInputContainer = {
+  [@react.component]
+  let make = (~values, ~onChange) => {
+    <>
+      {React.array(
+         Array.init(Array.length(values), i => {
+           <input
+             type_="number"
+             key={string_of_int(i)}
+             value={string_of_int(values[i])}
+             onChange={event => {
+              onChange(i, int_of_string(ReactEvent.Form.target(event)##value));
+             }}
+           />
+         }),
+       )}
+    </>;
   };
 };
