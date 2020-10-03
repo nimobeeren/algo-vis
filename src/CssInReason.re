@@ -25,7 +25,7 @@ module type MStyle = {
   let style: ReactDOM.style;
 };
 
-module Create = (BaseComponent: MComponent, BaseStyle: MStyle) => {
+module Styled = (BaseComponent: MComponent, BaseStyle: MStyle) => {
   [@react.component]
   let make = (~style) => {
     BaseComponent.make({
@@ -33,16 +33,3 @@ module Create = (BaseComponent: MComponent, BaseStyle: MStyle) => {
     });
   };
 };
-
-// Testing components
-
-module BaseButton = {
-  [@react.component]
-  let make = (~style) => {
-    <button style> {React.string("Click me")} </button>;
-  };
-};
-
-module CoolButton = Create(BaseButton, {
-  let style = ReactDOM.Style.make(~color="blue", ());
-});
