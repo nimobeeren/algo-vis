@@ -19,7 +19,7 @@ module Home = {
             <option> {React.string("Greedy")} </option>
           </select>
           <div className="group__bottom-text">
-            <p> {React.string("Worst-case running time: O(n^2)")} </p>
+            <p> {React.string("Worst-case running time: O(n")} <sup>{React.string("2")}</sup> {React.string(")")} </p>
             <p> {React.string("Approximation ratio: 2 - 1/m")} </p>
           </div>
         </div>
