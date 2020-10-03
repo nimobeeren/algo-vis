@@ -1,6 +1,3 @@
-// Need to open the module to avoid "unbound record field" on machine
-open LoadBalancing;
-
 module Job = {
   [@react.component]
   let make = (~size) => {
@@ -24,6 +21,9 @@ module Job = {
 };
 
 module BarPlot = {
+  // Need to open the module to avoid "unbound record field" on machine
+  open LoadBalancing;
+
   [@react.component]
   let make = (~machines: array(machine)) => {
     let makespan = getMakespan(machines);
