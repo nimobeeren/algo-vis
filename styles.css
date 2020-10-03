@@ -42,6 +42,12 @@ aside .group__bottom-text {
   gap: 8px;
 }
 
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
 .job-inputs {
   display: flex;
   flex-flow: row wrap;

@@ -79,15 +79,16 @@ module Home = {
           />
         </div>
         <div className="group">
-          <label> {React.string("Job sizes")} </label>
-          <div className="job-inputs">
+          <label htmlFor="job-input"> {React.string("Job sizes")} </label>
+          <fieldset className="job-inputs">
             <MultiNumberInput
               value=jobs
+              id="job-input"
               min="1"
               max="999"
               onChange={newValue => setJobs(_ => newValue)}
             />
-          </div>
+          </fieldset>
         </div>
       </aside>
       <main className="bucket bucket--large">
