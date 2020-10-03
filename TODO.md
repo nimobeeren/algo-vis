@@ -1,2 +1,12 @@
-- run expensive computations async, and time out after a while
-- make jobs width independent of text content
+- set min/max on job size inputs
+- fix styling of jobs:
+  - make jobs width independent of text content
+  - make sure jobs don't get pushed "under" the container when they get too small
+- highlight machine with maximum load
+- style form elements
+- implement ordered-scheduling
+- run algo async
+  - time out after a while
+  - report running time
+- header
+- dark mode
