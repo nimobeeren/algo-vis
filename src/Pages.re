@@ -13,15 +13,17 @@ module Home = {
 
     <article>
       <aside>
-        <fieldset>
+        <div className="group">
           <label htmlFor="algorithm"> {React.string("Algorithm")} </label>
           <select id="algorithm">
             <option> {React.string("Greedy")} </option>
           </select>
-          <p> {React.string("Worst-case running time: O(n^2)")} </p>
-          <p> {React.string("Approximation ratio: 2 - 1/m")} </p>
-        </fieldset>
-        <fieldset>
+          <div className="group__bottom-text">
+            <p> {React.string("Worst-case running time: O(n^2)")} </p>
+            <p> {React.string("Approximation ratio: 2 - 1/m")} </p>
+          </div>
+        </div>
+        <div className="group">
           <label htmlFor="num-machines">
             {React.string("Number of machines (m)")}
           </label>
@@ -35,8 +37,8 @@ module Home = {
               setNumMachines(ReactEvent.Form.target(event)##value)
             }}
           />
-        </fieldset>
-        <fieldset>
+        </div>
+        <div className="group">
           <label htmlFor="num-jobs">
             {React.string("Number of jobs (n)")}
           </label>
@@ -50,8 +52,8 @@ module Home = {
               setNumJobs(ReactEvent.Form.target(event)##value)
             }}
           />
-        </fieldset>
-        <fieldset>
+        </div>
+        <div className="group">
           <label> {React.string("Job sizes")} </label>
           <div className="job-inputs">
             {React.array(
@@ -66,19 +68,18 @@ module Home = {
                ),
              )}
           </div>
-        </fieldset>
+        </div>
       </aside>
       <main className="bucket bucket--large">
-        <div className="bucket__cover bucket__cover--large"/>
+        <div className="bucket__cover bucket__cover--large" />
         <BarPlot machines=result />
       </main>
       <aside>
-        <label> {React.string("Result")} </label>
-        <p
-          className="result-number">
-          {React.int(makespan)}
-        </p>
-        <p> {React.string("Actual running time: 69 ms")} </p>
+        <div className="group">
+          <label> {React.string("Result")} </label>
+          <p className="result-number"> {React.int(makespan)} </p>
+          <p> {React.string("Actual running time: 69 ms")} </p>
+        </div>
       </aside>
     </article>;
   };
