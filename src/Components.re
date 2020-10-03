@@ -29,6 +29,7 @@ module BarPlot = {
     let makespan = getMakespan(machines);
 
     <div
+      className="barplot"
       style={ReactDOM.Style.make(
         ~display="flex",
         ~flexFlow="row nowrap",
