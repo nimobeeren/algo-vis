@@ -1,4 +1,3 @@
-- set min/max on job size inputs
 - fix styling of jobs:
   - make jobs width independent of text content
   - make sure jobs don't get pushed "under" the container when they get too small
@@ -8,5 +7,6 @@
 - run algo async
   - time out after a while
   - report running time
+  - reduce restrictions on input
 - header
 - dark mode

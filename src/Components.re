@@ -48,7 +48,7 @@ module BarPlot = {
 
 module MultiNumberInput = {
   [@react.component]
-  let make = (~value, ~onChange) => {
+  let make = (~value, ~min=?, ~max=?, ~onChange) => {
     <>
       {React.array(
          Array.init(Array.length(value), i => {
@@ -56,10 +56,23 @@ module MultiNumberInput = {
              type_="number"
              key={string_of_int(i)}
              value={string_of_int(value[i])}
+             min={
+               switch (min) {
+               | Some(min) => min
+               | None => ""
+               }
+             }
+             max={
+               switch (max) {
+               | Some(max) => max
+               | None => ""
+               }
+             }
              onChange={event => {
-                let newValue = Array.copy(value);
-                newValue[i] = int_of_string(ReactEvent.Form.target(event)##value);
-                onChange(newValue);
+               let newValue = Array.copy(value);
+               newValue[i] =
+                 int_of_string(ReactEvent.Form.target(event)##value);
+               onChange(newValue);
              }}
            />
          }),

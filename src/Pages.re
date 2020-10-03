@@ -83,6 +83,8 @@ module Home = {
           <div className="job-inputs">
             <MultiNumberInput
               value=jobs
+              min="1"
+              max="999"
               onChange={newValue => setJobs(_ => newValue)}
             />
           </div>
