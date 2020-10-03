@@ -5,10 +5,13 @@
   "scripts": {
     "dev": "concurrently yarn:dev:*",
     "build": "yarn build:re && yarn build:js",
+    "clean": "yarn clean:js && yarn clean:re",
     "dev:js": "parcel index.html",
-    "build:js": "parcel build index.html",
-    "dev:re": "bsb -make-world -w -ws _ ",
-    "build:re": "bsb -make-world"
+    "build:js": "yarn clean:js && parcel build index.html",
+    "clean:js": "rimraf .cache dist",
+    "dev:re": "bsb -make-world -w",
+    "build:re": "bsb -make-world",
+    "clean:re": "bsb -clean-world"
   },
   "keywords": [
     "BuckleScript",
@@ -25,6 +28,7 @@
   "devDependencies": {
     "bs-platform": "^8.2.0",
     "concurrently": "^5.3.0",
-    "parcel-bundler": "^1.12.4"
+    "parcel-bundler": "^1.12.4",
+    "rimraf": "^3.0.2"
   }
 }
