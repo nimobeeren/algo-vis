@@ -1,5 +1,3 @@
-open CssInReason;
-
 // This is a basic component that passes the `style` prop on to a HTML element
 module BaseButton = {
   [@react.component]
@@ -9,7 +7,7 @@ module BaseButton = {
 };
 
 // This component also takes a `style` prop, but also applies some default styles
-module CoolButton = Styled(BaseButton, {
+module CoolButton = CssInReason.Styled(BaseButton, {
   let style = ReactDOM.Style.make(~color="blue", ~background="orange", ());
 });
 
