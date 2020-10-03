@@ -1,19 +1,19 @@
 {
   "name": "algo-vis",
   "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "build": "bsb -make-world",
-    "start": "bsb -make-world -w -ws _ ",
-    "clean": "bsb -clean-world",
-    "server": "moduleserve ./ --port 8000",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "yarn re:build && webpack",
+    "re:build": "bsb -make-world",
+    "re:start": "bsb -make-world -w -ws _ ",
+    "re:clean": "bsb -clean-world"
   },
   "keywords": [
     "BuckleScript",
     "ReasonReact",
     "reason-react"
   ],
-  "author": "",
+  "author": "Nimo Beeren",
   "license": "MIT",
   "dependencies": {
     "react": "^16.8.1",
@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "bs-platform": "^8.2.0",
-    "moduleserve": "^0.9.0"
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
   }
 }
