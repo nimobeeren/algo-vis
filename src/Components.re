@@ -14,17 +14,14 @@ module Job = {
 };
 
 module BarPlot = {
-  // Need to open the module to avoid "unbound record field" on machine
-  open LoadBalancing;
-
   [@react.component]
-  let make = (~machines: array(machine)) => {
-    let makespan = getMakespan(machines);
+  let make = (~machines: array(LoadBalancing.machine)) => {
+    let makespan = LoadBalancing.getMakespan(machines);
 
     <div className="barplot">
       {React.array(
          Array.map(
-           machine => {
+           (machine: LoadBalancing.machine) => {
              let height =
                float_of_int(machine.load) /. float_of_int(makespan) *. 100.;
              <div
