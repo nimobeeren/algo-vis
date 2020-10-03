@@ -68,7 +68,8 @@ module Home = {
           </div>
         </fieldset>
       </aside>
-      <main>
+      <main className="bucket bucket--large">
+        <div className="bucket__cover bucket__cover--large"/>
         <BarPlot machines=result />
       </main>
       <aside>

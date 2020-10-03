@@ -45,8 +45,6 @@ main {
   justify-content: center;
   max-width: 752px;
   padding: 64px;
-  border: 2px solid var(--color-dark);
-  border-radius: 16px;
 }
 
 main .barplot {
@@ -79,6 +77,10 @@ p {
   border-radius: 8px;
 }
 
+.bucket--large {
+  border-radius: 16px;
+}
+
 .bucket__cover {
   position: absolute;
   top: -2px;
@@ -86,6 +88,11 @@ p {
   left: 8px;
   right: 8px;
   background: var(--color-light);
+}
+
+.bucket__cover--large {
+  left: 16px;
+  right: 16px;
 }
 
 .bucket__cover ~ * {
