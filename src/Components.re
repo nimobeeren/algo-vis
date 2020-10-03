@@ -48,16 +48,18 @@ module BarPlot = {
 
 module MultiNumberInputContainer = {
   [@react.component]
-  let make = (~values, ~onChange) => {
+  let make = (~value, ~onChange) => {
     <>
       {React.array(
-         Array.init(Array.length(values), i => {
+         Array.init(Array.length(value), i => {
            <input
              type_="number"
              key={string_of_int(i)}
-             value={string_of_int(values[i])}
+             value={string_of_int(value[i])}
              onChange={event => {
-              onChange(i, int_of_string(ReactEvent.Form.target(event)##value));
+                let newValue = Array.copy(value);
+                newValue[i] = int_of_string(ReactEvent.Form.target(event)##value);
+                onChange(newValue);
              }}
            />
          }),

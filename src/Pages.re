@@ -4,25 +4,30 @@ module Home = {
   [@react.component]
   let make = () => {
     let (numMachines, setNumMachines) = React.useState(() => 4);
-    let (numJobs, setNumJobs) = React.useState(() => 6);
     let (jobs, setJobs) = React.useState(() => [|4, 3, 3, 3, 2, 1|]);
+    let (numJobs, setNumJobs) = React.useState(() => Array.length(jobs));
 
-    React.useEffect2(() => {
-      Js.log(jobs);
-      let numJobsInState = Array.length(jobs);
-      if (numJobsInState > numJobs) {
-        // We have too many jobs, so we drop some jobs off the end
-        setJobs(oldJobs => Array.sub(oldJobs, 0, numJobs));
-      } else if (numJobsInState < numJobs) {
-        // We don't have enough jobs, so we add more
-        setJobs(oldJobs => {
-          let defaultJobValue = 1;
-          let jobsToAdd = Array.make(numJobs - numJobsInState, defaultJobValue);
-          Array.append(oldJobs, jobsToAdd);
-        })
-      }
-      None;
-    }, (numJobs, jobs));
+    React.useEffect2(
+      () => {
+        let numJobsInState = Array.length(jobs);
+        if (numJobsInState > numJobs) {
+          // We have too many jobs, so we drop some jobs off the end
+          setJobs(oldJobs =>
+            Array.sub(oldJobs, 0, numJobs)
+          );
+        } else if (numJobsInState < numJobs) {
+          // We don't have enough jobs, so we add more
+          setJobs(oldJobs => {
+            let defaultJobValue = 1;
+            let jobsToAdd =
+              Array.make(numJobs - numJobsInState, defaultJobValue);
+            Array.append(oldJobs, jobsToAdd);
+          });
+        };
+        None;
+      },
+      (numJobs, jobs),
+    );
 
     let result = LoadBalancing.greedy(jobs, numMachines);
     let makespan = LoadBalancing.getMakespan(result);
@@ -77,12 +82,8 @@ module Home = {
           <label> {React.string("Job sizes")} </label>
           <div className="job-inputs">
             <MultiNumberInputContainer
-              values=jobs
-              onChange={(i, newValue) => setJobs(oldJobs => {
-                let newJobs = Array.copy(oldJobs);
-                newJobs[i] = newValue;
-                newJobs;
-              })}
+              value=jobs
+              onChange={newValue => setJobs(_ => newValue)}
             />
           </div>
         </div>
