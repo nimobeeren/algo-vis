@@ -34,7 +34,10 @@ module BarPlot = {
                )}>
                {React.array(
                   Array.init(List.length(machine.jobs), i => {
-                    <Job size={List.nth(machine.jobs, i)} />
+                    <Job
+                      key={string_of_int(i)}
+                      size={List.nth(machine.jobs, i)}
+                    />
                   }),
                 )}
              </div>;
