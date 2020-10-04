@@ -59,7 +59,8 @@ module Home = {
             role="region"
             ariaLabelledby="num-machines-label">
             <label id="num-machines-label" htmlFor="num-machines">
-              {React.string("Number of machines (m)")}
+              {React.string("Number of machines")}
+              <span className="lowercase">{React.string(" (m)")}</span>
             </label>
             <input
               id="num-machines"
@@ -74,7 +75,8 @@ module Home = {
           </div>
           <div className="group" role="region" ariaLabelledby="num-jobs-label">
             <label id="num-jobs-label" htmlFor="num-jobs">
-              {React.string("Number of jobs (n)")}
+              {React.string("Number of jobs")}
+              <span className="lowercase">{React.string(" (n)")}</span>
             </label>
             <input
               id="num-jobs"

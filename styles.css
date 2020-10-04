@@ -80,6 +80,10 @@ p {
   margin: 0;
 }
 
+.lowercase {
+  text-transform: lowercase;
+}
+
 .result-number {
   color: var(--color-primary);
   font-size: 64px;
