@@ -30,9 +30,7 @@ module Home = {
       (numJobs, jobs),
     );
 
-    // TODO: revert
-    let result = LoadBalancing.greedy(jobs, 3);
-    // let result = LoadBalancing.greedy(jobs, numMachines);
+    let result = LoadBalancing.greedy(jobs, numMachines);
     let makespan = LoadBalancing.getMakespan(result);
 
     <article>
@@ -47,7 +45,7 @@ module Home = {
               id="algorithm"
               value=algo
               onChange={event =>
-                setAlgo(ReactEvent.Form.target(event)##value)
+                setAlgo(_ => ReactEvent.Form.target(event)##value)
               }>
               <option value="greedy"> {React.string("Greedy")} </option>
               <option value="sorted">
@@ -78,12 +76,10 @@ module Home = {
             </label>
             <NumberInput
               id="num-machines"
-              value={string_of_int(numMachines)}
-              min="1"
-              max="4"
-              onChange={event => {
-                setNumMachines(ReactEvent.Form.target(event)##value)
-              }}
+              value=numMachines
+              min=1
+              max=4
+              onChange={newValue => {setNumMachines(_ => newValue)}}
             />
           </div>
           <div className="group" role="region" ariaLabelledby="num-jobs-label">
@@ -91,13 +87,12 @@ module Home = {
               {React.string("Number of jobs")}
               <span className="lowercase"> {React.string(" (n)")} </span>
             </label>
-            <NumberInput id="num-jobs"
-              value={string_of_int(numJobs)}
-              min="1"
-              max="15"
-              onChange={event => {
-                setNumJobs(ReactEvent.Form.target(event)##value)
-              }}
+            <NumberInput
+              id="num-jobs"
+              value=numJobs
+              min=1
+              max=15
+              onChange={newValue => {setNumJobs(_ => newValue)}}
             />
           </div>
           <div
@@ -110,8 +105,8 @@ module Home = {
                 value=jobs
                 id="job-input"
                 ariaLabelledby="job-inputs-label"
-                min="1"
-                max="999"
+                min=1
+                max=999
                 onChange={newValue => setJobs(_ => newValue)}
               />
             </fieldset>
