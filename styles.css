@@ -95,18 +95,18 @@ p {
   font-weight: 300;
 }
 
-.bucket {
+.tube {
   position: relative;
   background: var(--color-light);
   border: 2px solid var(--color-dark);
   border-radius: 8px;
 }
 
-.bucket--large {
+.tube--large {
   border-radius: 16px;
 }
 
-.bucket__cover {
+.tube__cover {
   position: absolute;
   top: -2px;
   bottom: -2px;
@@ -115,12 +115,12 @@ p {
   background: var(--color-light);
 }
 
-.bucket__cover--large {
+.tube__cover--large {
   left: 16px;
   right: 16px;
 }
 
-.bucket__cover ~ * {
+.tube__cover ~ * {
   /* Ensure content is above cover */
   z-index: 1;
 }

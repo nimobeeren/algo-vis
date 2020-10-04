@@ -35,8 +35,11 @@ module Home = {
     <article>
       <form id="input-form" action="#">
         <aside>
-          <div className="group" role="region" ariaLabelledby="algorithm-label">
-            <label id="algorithm-label" htmlFor="algorithm"> {React.string("Algorithm")} </label>
+          <div
+            className="group" role="region" ariaLabelledby="algorithm-label">
+            <label id="algorithm-label" htmlFor="algorithm">
+              {React.string("Algorithm")}
+            </label>
             <select id="algorithm">
               <option> {React.string("Greedy")} </option>
             </select>
@@ -46,10 +49,15 @@ module Home = {
                 <sup> {React.string("2")} </sup>
                 {React.string(")")}
               </p>
-              <p role="note"> {React.string("Approximation ratio: 2 - 1/m")} </p>
+              <p role="note">
+                {React.string("Approximation ratio: 2 - 1/m")}
+              </p>
             </div>
           </div>
-          <div className="group" role="region" ariaLabelledby="num-machines-label">
+          <div
+            className="group"
+            role="region"
+            ariaLabelledby="num-machines-label">
             <label id="num-machines-label" htmlFor="num-machines">
               {React.string("Number of machines (m)")}
             </label>
@@ -79,7 +87,8 @@ module Home = {
               }}
             />
           </div>
-          <div className="group" role="region" ariaLabelledby="job-inputs-label">
+          <div
+            className="group" role="region" ariaLabelledby="job-inputs-label">
             <label id="job-inputs-label" htmlFor="job-input">
               {React.string("Job sizes")}
             </label>
@@ -96,14 +105,18 @@ module Home = {
           </div>
         </aside>
       </form>
-      <main className="bucket bucket--large">
-        <div className="bucket__cover bucket__cover--large" role="presentation" />
+      <main className="tube tube--large">
+        <div className="tube__cover tube__cover--large" role="presentation" />
         <BarPlot machines=result />
       </main>
       <aside>
         <div className="group" role="region" ariaLabelledby="result-label">
-          <label id="result-label" htmlFor="result"> {React.string("Result")} </label>
-          <output id="result" htmlFor="input-form" className="result-number"> {React.int(makespan)} </output>
+          <label id="result-label" htmlFor="result">
+            {React.string("Result")}
+          </label>
+          <output id="result" htmlFor="input-form" className="result-number">
+            {React.int(makespan)}
+          </output>
           <p role="note"> {React.string("Actual running time: 69 ms")} </p>
         </div>
       </aside>

@@ -4,13 +4,13 @@ module Job = {
   [@react.component]
   let make = (~size) => {
     <div
-      className="job bucket"
+      className="job tube"
       style={ReactDOM.Style.make(
         ~flexBasis="0", // to ensure flexGrow determines relative size
         ~flexGrow=string_of_int(size),
         (),
       )}>
-      <div className="bucket__cover" role="presentation" />
+      <div className="tube__cover" role="presentation" />
       <div> {React.int(size)} </div>
     </div>;
   };
