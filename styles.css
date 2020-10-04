@@ -93,7 +93,7 @@ p {
   font-size: 48px;
   line-height: 48px;
   font-weight: 300;
-  min-height: 0; /* needed to make flexbox shrink under content size */
+  min-height: 0; /* needed to make flex item shrink smaller than content size */
 }
 
 .job__content {
@@ -113,6 +113,10 @@ p {
 
 .tube--large {
   border-radius: 16px;
+}
+
+.tube--primary {
+  border-color: var(--color-primary);
 }
 
 .tube__cover {

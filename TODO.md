@@ -1,7 +1,3 @@
-- fix styling of jobs:
-  - make jobs width independent of text content
-  - make sure jobs don't get pushed "under" the container when they get too small
-- highlight machine with maximum load
 - style form elements
 - implement ordered-scheduling
 - run algo async

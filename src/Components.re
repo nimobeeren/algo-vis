@@ -2,9 +2,9 @@ open Utils;
 
 module Job = {
   [@react.component]
-  let make = (~size) => {
+  let make = (~size, ~isHighlighted) => {
     <div
-      className="job tube"
+      className={"job tube" ++ (isHighlighted ? " tube--primary" : "")}
       style={ReactDOM.Style.make(
         ~flexBasis="0", // to ensure flexGrow determines relative size
         ~flexGrow=string_of_int(size),
@@ -31,6 +31,7 @@ module BarPlot = {
            (machine: LoadBalancing.machine) => {
              let height =
                float_of_int(machine.load) /. float_of_int(makespan) *. 100.;
+             let hasMaxMakespan = machine.load == makespan;
              <div
                className="machine"
                key={string_of_int(machine.id)}
@@ -43,6 +44,7 @@ module BarPlot = {
                     <Job
                       key={string_of_int(i)}
                       size={List.nth(machine.jobs, i)}
+                      isHighlighted={hasMaxMakespan}
                     />
                   }),
                 )}
