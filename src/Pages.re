@@ -3,6 +3,7 @@ open Components;
 module Home = {
   [@react.component]
   let make = () => {
+    let (algo, setAlgo) = React.useState(() => "greedy");
     let (numMachines, setNumMachines) = React.useState(() => 4);
     let (jobs, setJobs) = React.useState(() => [|4, 3, 3, 3, 2, 1|]);
     let (numJobs, setNumJobs) = React.useState(() => Array.length(jobs));
@@ -40,9 +41,17 @@ module Home = {
             <label id="algorithm-label" htmlFor="algorithm">
               {React.string("Algorithm")}
             </label>
-            <select id="algorithm">
-              <option> {React.string("Greedy")} </option>
-            </select>
+            <Select
+              id="algorithm"
+              value=algo
+              onChange={event =>
+                setAlgo(ReactEvent.Form.target(event)##value)
+              }>
+              <option value="greedy"> {React.string("Greedy")} </option>
+              <option value="sorted">
+                {React.string("Sorted Greedy")}
+              </option>
+            </Select>
             <div className="group__bottom-text">
               <p role="note">
                 {React.string("Worst-case running time: O(n")}
@@ -60,7 +69,7 @@ module Home = {
             ariaLabelledby="num-machines-label">
             <label id="num-machines-label" htmlFor="num-machines">
               {React.string("Number of machines")}
-              <span className="lowercase">{React.string(" (m)")}</span>
+              <span className="lowercase"> {React.string(" (m)")} </span>
             </label>
             <input
               id="num-machines"
@@ -76,7 +85,7 @@ module Home = {
           <div className="group" role="region" ariaLabelledby="num-jobs-label">
             <label id="num-jobs-label" htmlFor="num-jobs">
               {React.string("Number of jobs")}
-              <span className="lowercase">{React.string(" (n)")}</span>
+              <span className="lowercase"> {React.string(" (n)")} </span>
             </label>
             <input
               id="num-jobs"

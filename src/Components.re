@@ -44,7 +44,7 @@ module BarPlot = {
                     <Job
                       key={string_of_int(i)}
                       size={List.nth(machine.jobs, i)}
-                      isHighlighted={hasMaxMakespan}
+                      isHighlighted=hasMaxMakespan
                     />
                   }),
                 )}
@@ -81,5 +81,18 @@ module MultiNumberInput = {
          }),
        )}
     </>;
+  };
+};
+
+module Select = {
+  [@react.component]
+  let make = (~children, ~id, ~value, ~onChange) => {
+    <div className="select tube" role="presentation">
+      <div className="tube__cover tube__cover--select" role="presentation" />
+      <select id value onChange> children </select>
+      <svg className="select__arrow" role="presentation" viewBox="0 0 12 12">
+        <polygon points="1,3 11,3 6,11.66" />
+      </svg>
+    </div>;
   };
 };
