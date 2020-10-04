@@ -6,3 +6,4 @@
   - reduce restrictions on input
 - header
 - dark mode
+- favicon

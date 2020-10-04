@@ -30,7 +30,9 @@ module Home = {
       (numJobs, jobs),
     );
 
-    let result = LoadBalancing.greedy(jobs, numMachines);
+    // TODO: revert
+    let result = LoadBalancing.greedy(jobs, 3);
+    // let result = LoadBalancing.greedy(jobs, numMachines);
     let makespan = LoadBalancing.getMakespan(result);
 
     <article>
@@ -74,9 +76,8 @@ module Home = {
               {React.string("Number of machines")}
               <span className="lowercase"> {React.string(" (m)")} </span>
             </label>
-            <input
+            <NumberInput
               id="num-machines"
-              type_="number"
               value={string_of_int(numMachines)}
               min="1"
               max="4"
@@ -90,9 +91,7 @@ module Home = {
               {React.string("Number of jobs")}
               <span className="lowercase"> {React.string(" (n)")} </span>
             </label>
-            <input
-              id="num-jobs"
-              type_="number"
+            <NumberInput id="num-jobs"
               value={string_of_int(numJobs)}
               min="1"
               max="15"

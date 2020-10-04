@@ -30,13 +30,13 @@ article {
   padding: 32px;
 }
 
-.aside .group {
+.group {
   display: flex;
   flex-flow: column nowrap;
   gap: 16px;
 }
 
-.aside .group__bottom-text {
+.group__bottom-text {
   display: flex;
   flex-flow: column nowrap;
   gap: 8px;
@@ -143,12 +143,19 @@ borders of the parent element
   right: 16px;
 }
 
-.tube__cover--select {
-  right: 32px;
+.tube__cover--bottom {
   border-bottom: 2px solid var(--color-secondary);
   transition-property: border-color;
   transition-duration: 150ms;
   transition-timing-function: ease-in-out;
+}
+
+.tube__cover--select {
+  right: 32px;
+}
+
+.tube__cover--number-input {
+  right: 16px;
 }
 
 .tube__cover ~ * {
@@ -202,6 +209,22 @@ borders of the parent element
   pointer-events: none;
 }
 
-.select:focus-within .tube__cover {
+.select:focus-within .tube__cover--bottom,
+.number-input:focus-within .tube__cover--bottom {
   border-color: var(--color-primary);
+}
+
+.number-input {
+  width: 56px;
+  height: 32px;
+}
+
+.number-input input[type="number"] {
+  width: 100%;
+  height: 32px;
+  margin: -2px 0;
+  border: none;
+  padding: 0 8px;
+  outline: none;
+  background: none;
 }

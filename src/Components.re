@@ -67,6 +67,23 @@ module BarPlot = {
   };
 };
 
+module NumberInput = {
+  [@react.component]
+  let make = (~value, ~id=?, ~min=?, ~max=?, ~onChange) => {
+    <div className="number-input tube" role="presentation">
+      <div className="tube__cover tube__cover--bottom tube__cover--number-input" />
+      <input
+        type_="number"
+        value
+        id={getOptionValue(id, "")}
+        min={getOptionValue(min, "")}
+        max={getOptionValue(max, "")}
+        onChange
+      />
+    </div>;
+  };
+};
+
 module MultiNumberInput = {
   [@react.component]
   let make = (~value, ~id=?, ~ariaLabelledby=?, ~min=?, ~max=?, ~onChange) => {
@@ -98,7 +115,7 @@ module Select = {
   [@react.component]
   let make = (~children, ~id, ~value, ~onChange) => {
     <div className="select tube" role="presentation">
-      <div className="tube__cover tube__cover--select" role="presentation" />
+      <div className="tube__cover tube__cover--bottom tube__cover--select" role="presentation" />
       <select id value onChange> children </select>
       <svg className="select__arrow" role="presentation" viewBox="0 0 12 12">
         <polygon points="1,3 11,3 6,11.66" />
