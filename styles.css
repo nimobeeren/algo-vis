@@ -22,7 +22,7 @@ article {
   margin: 128px 72px;
 }
 
-aside {
+.aside {
   display: flex;
   flex-flow: column nowrap;
   gap: 32px;
@@ -30,13 +30,13 @@ aside {
   padding: 32px;
 }
 
-aside .group {
+.aside .group {
   display: flex;
   flex-flow: column nowrap;
   gap: 16px;
 }
 
-aside .group__bottom-text {
+.aside .group__bottom-text {
   display: flex;
   flex-flow: column nowrap;
   gap: 8px;

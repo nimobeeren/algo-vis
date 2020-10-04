@@ -5,14 +5,20 @@ module Job = {
   let make = (~size, ~isHighlighted) => {
     <div
       className={"job tube" ++ (isHighlighted ? " tube--primary" : "")}
+      ariaLabel={"job of size " ++ string_of_int(size)}
       style={ReactDOM.Style.make(
         ~flexBasis="0", // to ensure flexGrow determines relative size
         ~flexGrow=string_of_int(size),
         (),
       )}>
       <div className="tube__cover" role="presentation" />
-      <svg className="job__content" viewBox="0 -4 80 48">
-        <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle">
+      <svg className="job__content" role="presentation" viewBox="0 -4 80 48">
+        <text
+          x="50%"
+          y="50%"
+          dominantBaseline="middle"
+          textAnchor="middle"
+          role="presentation">
           {React.int(size)}
         </text>
       </svg>
@@ -25,7 +31,10 @@ module BarPlot = {
   let make = (~machines: array(LoadBalancing.machine)) => {
     let makespan = LoadBalancing.getMakespan(machines);
 
-    <div className="barplot">
+    <div
+      className="barplot"
+      role="figure"
+      ariaLabel="Visualization of the computed solution to the load balancing problem">
       {React.array(
          Array.map(
            (machine: LoadBalancing.machine) => {
@@ -35,6 +44,7 @@ module BarPlot = {
              <div
                className="machine"
                key={string_of_int(machine.id)}
+               ariaLabel="machine"
                style={ReactDOM.Style.make(
                  ~height=Js.Float.toString(height) ++ "%",
                  (),

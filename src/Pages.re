@@ -34,8 +34,8 @@ module Home = {
     let makespan = LoadBalancing.getMakespan(result);
 
     <article>
-      <form id="input-form" action="#">
-        <aside>
+      <aside>
+        <form id="input-form" action="#" className="aside">
           <div
             className="group" role="region" ariaLabelledby="algorithm-label">
             <label id="algorithm-label" htmlFor="algorithm">
@@ -54,9 +54,12 @@ module Home = {
             </Select>
             <div className="group__bottom-text">
               <p role="note">
-                {React.string("Worst-case running time: O(n")}
-                <sup> {React.string("2")} </sup>
-                {React.string(")")}
+                {React.string("Worst-case running time: ")}
+                <span ariaLabel="Oh of n squared">
+                  {React.string("O(n")}
+                  <sup> {React.string("2")} </sup>
+                  {React.string(")")}
+                </span>
               </p>
               <p role="note">
                 {React.string("Approximation ratio: 2 - 1/m")}
@@ -114,13 +117,13 @@ module Home = {
               />
             </fieldset>
           </div>
-        </aside>
-      </form>
+        </form>
+      </aside>
       <main className="tube tube--large">
         <div className="tube__cover tube__cover--large" role="presentation" />
         <BarPlot machines=result />
       </main>
-      <aside>
+      <aside className="aside">
         <div className="group" role="region" ariaLabelledby="result-label">
           <label id="result-label" htmlFor="result">
             {React.string("Result")}
