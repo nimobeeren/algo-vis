@@ -79,11 +79,14 @@ module Home = {
           />
         </div>
         <div className="group">
-          <label htmlFor="job-input"> {React.string("Job sizes")} </label>
+          <label id="job-inputs-label" htmlFor="job-input">
+            {React.string("Job sizes")}
+          </label>
           <fieldset className="job-inputs">
             <MultiNumberInput
               value=jobs
               id="job-input"
+              ariaLabelledby="job-inputs-label"
               min="1"
               max="999"
               onChange={newValue => setJobs(_ => newValue)}

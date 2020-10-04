@@ -1,4 +1,3 @@
-- associate all job size inputs to label
 - use <output> tag for makespan result?
 - fix styling of jobs:
   - make jobs width independent of text content

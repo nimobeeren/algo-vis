@@ -1,3 +1,5 @@
+open Utils;
+
 module Job = {
   [@react.component]
   let make = (~size) => {
@@ -50,16 +52,8 @@ module BarPlot = {
 };
 
 module MultiNumberInput = {
-  // Returns the string from an option if it's not None, otherwise returns a fallback
-  let getOptionalString = opt => {
-    switch (opt) {
-    | Some(opt) => opt
-    | None => ""
-    };
-  };
-
   [@react.component]
-  let make = (~value, ~id=?, ~min=?, ~max=?, ~onChange) => {
+  let make = (~value, ~id=?, ~ariaLabelledby=?, ~min=?, ~max=?, ~onChange) => {
     <>
       {React.array(
          Array.init(Array.length(value), i => {
@@ -67,9 +61,10 @@ module MultiNumberInput = {
              type_="number"
              key={string_of_int(i)}
              value={string_of_int(value[i])}
-             id={i == 0 ? getOptionalString(id) : ""}
-             min={getOptionalString(min)}
-             max={getOptionalString(max)}
+             id={i == 0 ? getOptionValue(id, "") : ""}
+             ariaLabelledby={getOptionValue(ariaLabelledby, "")}
+             min={getOptionValue(min, "")}
+             max={getOptionValue(max, "")}
              onChange={event => {
                let newValue = Array.copy(value);
                newValue[i] =
