@@ -1,4 +1,3 @@
-- use <output> tag for makespan result?
 - fix styling of jobs:
   - make jobs width independent of text content
   - make sure jobs don't get pushed "under" the container when they get too small

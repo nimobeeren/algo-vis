@@ -10,7 +10,7 @@ module Job = {
         ~flexGrow=string_of_int(size),
         (),
       )}>
-      <div className="bucket__cover" />
+      <div className="bucket__cover" role="presentation" />
       <div> {React.int(size)} </div>
     </div>;
   };
