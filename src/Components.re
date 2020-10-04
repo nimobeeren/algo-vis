@@ -11,7 +11,11 @@ module Job = {
         (),
       )}>
       <div className="tube__cover" role="presentation" />
-      <div> {React.int(size)} </div>
+      <svg className="job__content" viewBox="0 -4 80 48">
+        <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle">
+          {React.int(size)}
+        </text>
+      </svg>
     </div>;
   };
 };
