@@ -80,6 +80,10 @@ module NumberInput = {
         max={getOptionValue(max, "")}
         onChange
       />
+      <svg className="number-input__arrows" role="presentation" viewBox="0 0 8 16">
+        <polygon points="4,0 0.54,6 7.46,6" />
+        <polygon points="4,16 0.54,10 7.46,10" />
+      </svg>
     </div>;
   };
 };

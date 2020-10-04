@@ -151,11 +151,11 @@ borders of the parent element
 }
 
 .tube__cover--select {
-  right: 32px;
+  right: 30px;
 }
 
 .tube__cover--number-input {
-  right: 16px;
+  right: 14px;
 }
 
 .tube__cover ~ * {
@@ -189,7 +189,7 @@ borders of the parent element
   */
   width: 100%;
   height: 32px;
-  margin: -1px 0;
+  margin: -2px 0;
   padding: 0 8px;
   border: none;
   outline: none;
@@ -206,6 +206,7 @@ borders of the parent element
   top: 8px;
   width: 12px;
   height: 12px;
+  fill: var(--color-dark);
   pointer-events: none;
 }
 
@@ -227,4 +228,23 @@ borders of the parent element
   padding: 0 8px;
   outline: none;
   background: none;
+  /* hide the default arrows (Firefox only) */
+  -moz-appearance: textfield;
+}
+
+/* hide the default arrows (Webkit only) */
+.number-input input[type="number"]::-webkit-outer-spin-button,
+.number-input input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.number-input__arrows {
+  position: absolute;
+  right: 4px;
+  top: 6px;
+  width: 8px;
+  height: 16px;
+  fill: var(--color-dark);
+  cursor: default;
 }
