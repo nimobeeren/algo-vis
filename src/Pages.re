@@ -68,11 +68,12 @@ module Home = {
               id="algorithm"
               value={algoToString(algo)}
               onChange={event => {
-                let newAlgo = stringToAlgo(ReactEvent.Form.target(event)##value);
+                let newAlgo =
+                  stringToAlgo(ReactEvent.Form.target(event)##value);
                 switch (newAlgo) {
-                  | Some(algo) => setAlgo(_ => algo);
-                  | None => (); // got invalid value, so don't set state
-                }
+                | Some(algo) => setAlgo(_ => algo)
+                | None => () // got invalid value, so don't set state
+                };
               }}>
               <option value="greedy"> {React.string("Greedy")} </option>
               <option value="ordered">
@@ -127,7 +128,7 @@ module Home = {
             <label id="job-inputs-label" htmlFor="job-input">
               {React.string("Job sizes")}
             </label>
-            <fieldset className="job-inputs">
+            <div className="job-inputs">
               <MultiNumberInput
                 value=jobs
                 id="job-input"
@@ -136,7 +137,7 @@ module Home = {
                 max=999
                 onChange={newValue => setJobs(_ => newValue)}
               />
-            </fieldset>
+            </div>
           </div>
         </form>
       </aside>
