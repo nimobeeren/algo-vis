@@ -1,5 +1,4 @@
 - test performance when changing job size very fast (using arrow keys)
-- implement ordered-scheduling
 - run algo async
   - time out after a while
   - report running time

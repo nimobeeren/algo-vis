@@ -1,11 +1,30 @@
 open Components;
 
 module Home = {
+  type algo =
+    | Greedy
+    | Ordered;
+
+  let algoToString = algo => {
+    switch (algo) {
+    | Greedy => "greedy"
+    | Ordered => "ordered"
+    };
+  };
+
+  let stringToAlgo = str => {
+    switch (str) {
+    | "greedy" => Some(Greedy)
+    | "ordered" => Some(Ordered)
+    | _ => None
+    };
+  };
+
   [@react.component]
   let make = () => {
-    let (algo, setAlgo) = React.useState(() => "greedy");
+    let (algo, setAlgo) = React.useState(() => Greedy);
     let (numMachines, setNumMachines) = React.useState(() => 4);
-    let (jobs, setJobs) = React.useState(() => [|4, 3, 3, 3, 2, 1|]);
+    let (jobs, setJobs) = React.useState(() => [|1, 2, 3, 3, 4|]);
     let (numJobs, setNumJobs) = React.useState(() => Array.length(jobs));
 
     React.useEffect2(
@@ -30,7 +49,11 @@ module Home = {
       (numJobs, jobs),
     );
 
-    let result = LoadBalancing.greedy(jobs, numMachines);
+    let result =
+      switch (algo) {
+      | Greedy => LoadBalancing.greedy(jobs, numMachines)
+      | Ordered => LoadBalancing.ordered(jobs, numMachines)
+      };
     let makespan = LoadBalancing.getMakespan(result);
 
     <article>
@@ -43,12 +66,16 @@ module Home = {
             </label>
             <Select
               id="algorithm"
-              value=algo
-              onChange={event =>
-                setAlgo(_ => ReactEvent.Form.target(event)##value)
-              }>
+              value={algoToString(algo)}
+              onChange={event => {
+                let newAlgo = stringToAlgo(ReactEvent.Form.target(event)##value);
+                switch (newAlgo) {
+                  | Some(algo) => setAlgo(_ => algo);
+                  | None => (); // got invalid value, so don't set state
+                }
+              }}>
               <option value="greedy"> {React.string("Greedy")} </option>
-              <option value="sorted">
+              <option value="ordered">
                 {React.string("Sorted Greedy")}
               </option>
             </Select>
