@@ -97,9 +97,10 @@ module NumberInput = {
           onChange(newValue == "" ? 0 : int_of_string(newValue));
         }}
       />
-      <div className="number-input__buttons">
+      <div className="number-input__buttons" ariaHidden=true>
         <button
           className="number-input__button"
+          tabIndex=(-1)
           onClick={_ =>
             switch (max) {
             | Some(max) =>
@@ -115,6 +116,7 @@ module NumberInput = {
         </button>
         <button
           className="number-input__button"
+          tabIndex=(-1)
           onClick={_ =>
             switch (min) {
             | Some(min) =>
