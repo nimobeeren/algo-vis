@@ -7,7 +7,7 @@
     "build": "yarn build:re && yarn build:js",
     "clean": "yarn clean:js && yarn clean:re",
     "dev:js": "parcel index.html",
-    "build:js": "yarn clean:js && parcel build index.html",
+    "build:js": "yarn clean:js && parcel build index.html && cp public/* dist/",
     "clean:js": "rimraf .cache dist",
     "dev:re": "bsb -make-world -w",
     "build:re": "bsb -make-world",

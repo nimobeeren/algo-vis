@@ -3,4 +3,5 @@
   - time out after a while
   - report running time
   - reduce restrictions on input
-- favicon
+- mobile
+- footer
