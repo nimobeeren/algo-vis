@@ -100,6 +100,7 @@ module NumberInput = {
       <div className="number-input__buttons" ariaHidden=true>
         <button
           className="number-input__button"
+          type_="button"
           tabIndex=(-1)
           onClick={_ =>
             switch (max) {
@@ -116,6 +117,7 @@ module NumberInput = {
         </button>
         <button
           className="number-input__button"
+          type_="button"
           tabIndex=(-1)
           onClick={_ =>
             switch (min) {
@@ -220,6 +222,7 @@ module ColorModeToggle = {
 
     <button
       className="dark-mode"
+      type_="button"
       title={
         colorMode == "light" ? "Activate dark mode" : "Activate light mode"
       }
