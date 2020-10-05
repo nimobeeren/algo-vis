@@ -293,3 +293,9 @@ borders of the parent element
   border: none;
   outline: none;
 }
+
+.dark-mode {
+  background: none;
+  border: none;
+  padding: 0;
+}

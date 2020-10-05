@@ -176,3 +176,59 @@ module Select = {
     </div>;
   };
 };
+
+module ColorModeToggle = {
+  type element;
+
+  [@bs.val] [@bs.scope ("window", "document")]
+  external root: element = "documentElement";
+
+  [@bs.val] [@bs.scope ("window", "document", "documentElement", "style")]
+  external rootGetPropertyValue: string => string = "getPropertyValue";
+
+  [@bs.val] [@bs.scope ("window", "document", "documentElement", "style")]
+  external rootSetProperty: (string, string) => unit = "setProperty";
+
+  [@bs.val] external getComputedStyle: element => 'a = "getComputedStyle";
+
+  [@bs.val] [@bs.scope "localStorage"]
+  external localStorageSetItem: (string, string) => unit = "setItem";
+
+  [@react.component]
+  let make = () => {
+    let (colorMode, rawSetColorMode) =
+      React.useState(() => rootGetPropertyValue("--initial-color-mode"));
+
+    let setColorMode = newColorMode => {
+      rawSetColorMode(_ => newColorMode);
+
+      localStorageSetItem("color-mode", newColorMode);
+
+      // If switching from dark to light or light to dark,
+      // swap the light and dark colors
+      if (colorMode == "dark"
+          && newColorMode == "light"
+          || colorMode == "light"
+          && newColorMode == "dark") {
+        let computedStyle = getComputedStyle(root);
+        let light = computedStyle##getPropertyValue("--color-light");
+        let dark = computedStyle##getPropertyValue("--color-dark");
+        rootSetProperty("--color-light", dark);
+        rootSetProperty("--color-dark", light);
+      };
+    };
+
+    <button
+      className="dark-mode"
+      title={
+        colorMode == "light" ? "Activate dark mode" : "Activate light mode"
+      }
+      onClick={_ => setColorMode(colorMode == "light" ? "dark" : "light")}>
+      {if (colorMode == "light") {
+         <Icons.Sun />;
+       } else {
+         <Icons.Moon />;
+       }}
+    </button>;
+  };
+};
