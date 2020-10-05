@@ -24,7 +24,7 @@ module Home = {
   let make = () => {
     let (algo, setAlgo) = React.useState(() => Greedy);
     let (numMachines, setNumMachines) = React.useState(() => 4);
-    let (jobs, setJobs) = React.useState(() => [|1, 2, 3, 3, 4|]);
+    let (jobs, setJobs) = React.useState(() => [|1, 1, 2, 2, 3, 4|]);
     let (numJobs, setNumJobs) = React.useState(() => Array.length(jobs));
 
     React.useEffect2(
