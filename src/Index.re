@@ -1,7 +1,5 @@
-open Pages;
-
 // Standard ReactDOM rendering
 switch (ReactDOM.querySelector("#root")) {
-| Some(root) => ReactDOM.render(<Home />, root)
+| Some(root) => ReactDOM.render(<App />, root)
 | None => raise(Not_found)
 };

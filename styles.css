@@ -14,6 +14,20 @@ body {
   line-height: 16px;
 }
 
+header {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 16px;
+}
+
+header svg {
+  display: block;
+  width: 32px;
+  height: 32px;
+  fill: var(--color-dark);
+}
+
 article {
   display: flex;
   flex-flow: row nowrap;
