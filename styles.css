@@ -32,6 +32,12 @@ header svg {
   fill: var(--color-dark);
 }
 
+.dark-mode {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
 article {
   display: flex;
   flex-flow: row nowrap;
@@ -292,10 +298,4 @@ borders of the parent element
   background: none;
   border: none;
   outline: none;
-}
-
-.dark-mode {
-  background: none;
-  border: none;
-  padding: 0;
 }

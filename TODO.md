@@ -3,6 +3,4 @@
   - time out after a while
   - report running time
   - reduce restrictions on input
-- header
-- dark mode
 - favicon
