@@ -229,6 +229,11 @@ borders of the parent element
   appearance: none;
 }
 
+option {
+  /* Options shouldn't be styled */
+  color: initial;
+}
+
 .select__arrow {
   position: absolute;
   right: 10px;
