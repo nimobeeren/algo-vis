@@ -8,6 +8,9 @@ html {
   --color-dark: #211103;
   --color-light: #FFFFFF;
 
+  --bp-tablet: 640px;
+  --bp-desktop: 1024px;
+
   background: var(--color-light);
 }
 
@@ -19,9 +22,10 @@ body {
 }
 
 header {
-  display: flex;
-  justify-content: flex-end;
-  gap: 16px;
+  display: grid;
+  justify-content: end;
+  grid-auto-flow: column;
+  grid-gap: 16px;
   padding: 16px;
 }
 
@@ -43,29 +47,28 @@ article {
   flex-flow: row nowrap;
   justify-content: center;
   height: 648px;
-  margin-top: 64px;
-  margin-left: 72px;
-  margin-right: 72px;
+  margin: 64px 72px;
 }
 
 .aside {
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 32px;
+  display: grid;
+  grid-auto-flow: row;
+  align-items: start;
+  grid-gap: 32px;
   width: 272px;
   padding: 32px;
 }
 
 .group {
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 16px;
+  display: grid;
+  grid-auto-flow: row;
+  grid-gap: 16px;
 }
 
 .group__bottom-text {
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 8px;
+  display: grid;
+  grid-auto-flow: row;
+  grid-gap: 8px;
 }
 
 fieldset {
@@ -75,9 +78,10 @@ fieldset {
 }
 
 .job-inputs {
-  display: flex;
-  flex-flow: row wrap;
-  gap: 8px;
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: repeat(auto-fill, 56px);
+  grid-gap: 8px;
 }
 
 label {
@@ -197,10 +201,10 @@ borders of the parent element
 }
 
 .barplot {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: flex-end;
-  gap: 32px;
+  display: grid;
+  grid-auto-flow: column;
+  align-items: end;
+  grid-gap: 32px;
   height: 480px;
 }
 

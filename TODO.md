@@ -1,7 +1,9 @@
-- test performance when changing job size very fast (using arrow keys)
+- mobile
+- memoize calculations?
+- display running time
 - run algo async
   - time out after a while
   - report running time
   - reduce restrictions on input
-- mobile
 - footer
+- implement brute force/PTAS
