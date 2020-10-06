@@ -56,7 +56,7 @@ module Home = {
       };
     let makespan = LoadBalancing.getMakespan(result);
 
-    <article>
+    <main>
       <aside>
         <form id="input-form" action="#" className="aside">
           <div
@@ -141,10 +141,10 @@ module Home = {
           </div>
         </form>
       </aside>
-      <main className="tube tube--large">
+      <section className="tube tube--large">
         <div className="tube__cover tube__cover--large" role="presentation" />
         <BarPlot machines=result />
-      </main>
+      </section>
       <aside className="aside">
         <div className="group" role="region" ariaLabelledby="result-label">
           <label id="result-label" htmlFor="result">
@@ -156,6 +156,6 @@ module Home = {
           <p role="note"> {React.string("Actual running time: 69 ms")} </p>
         </div>
       </aside>
-    </article>;
+    </main>;
   };
 };

@@ -42,7 +42,7 @@ header svg {
   padding: 0;
 }
 
-article {
+main {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -92,7 +92,7 @@ label {
   text-transform: uppercase;
 }
 
-main {
+section {
   flex-grow: 1;
   display: flex;
   flex-flow: row nowrap;
@@ -101,7 +101,7 @@ main {
   padding: 64px;
 }
 
-main .barplot {
+section .barplot {
   flex-grow: 1;
   max-width: 560px;
 }
