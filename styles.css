@@ -43,20 +43,46 @@ header svg {
 }
 
 main {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  height: 648px;
-  margin: 64px 72px;
+  display: grid;
+  grid-auto-flow: row;
+  justify-items: center;
+  grid-gap: 48px;
+  /* margin: 64px 72px; tablet/desktop? */
+  margin: 16px 32px;
+}
+
+aside {
+  width: 100%;
+  max-width: 376px;
+  /* padding: 32px; desktop only */
 }
 
 .aside {
   display: grid;
   grid-auto-flow: row;
-  align-items: start;
+  align-items: center;
+  align-content: center;
   grid-gap: 32px;
-  width: 272px;
-  padding: 32px;
+  width: 100%;
+}
+
+section {
+  flex-grow: 1;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  max-width: 752px;
+  /* padding: 64px; tablet+ */
+}
+
+section.tube {
+  /* TODO: restore border on tablet+ */
+  border: none;
+}
+
+section .barplot {
+  flex-grow: 1;
+  max-width: 560px;
 }
 
 .group {
@@ -69,12 +95,6 @@ main {
   display: grid;
   grid-auto-flow: row;
   grid-gap: 8px;
-}
-
-fieldset {
-  margin: 0;
-  padding: 0;
-  border: none;
 }
 
 .job-inputs {
@@ -90,20 +110,6 @@ label {
   line-height: 16px;
   font-weight: 700;
   text-transform: uppercase;
-}
-
-section {
-  flex-grow: 1;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  max-width: 752px;
-  padding: 64px;
-}
-
-section .barplot {
-  flex-grow: 1;
-  max-width: 560px;
 }
 
 p {
