@@ -1,4 +1,3 @@
-- mobile
 - memoize calculations?
 - display running time
 - run algo async
@@ -7,3 +6,5 @@
   - reduce restrictions on input
 - footer
 - implement brute force/PTAS
+- use pseudo elements for tube cover?
+- check if role="presentation" is bad when the children matter
