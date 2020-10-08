@@ -1,30 +1,11 @@
 open Components;
 
 module Home = {
-  type algo =
-    | Greedy
-    | Ordered;
-
-  let algoToString = algo => {
-    switch (algo) {
-    | Greedy => "greedy"
-    | Ordered => "ordered"
-    };
-  };
-
-  let stringToAlgo = str => {
-    switch (str) {
-    | "greedy" => Some(Greedy)
-    | "ordered" => Some(Ordered)
-    | _ => None
-    };
-  };
-
   [@bs.scope "performance"] [@bs.val] external now: unit => float = "now";
 
   [@react.component]
   let make = () => {
-    let (algo, setAlgo) = React.useState(() => Greedy);
+    let (algo, setAlgo) = React.useState(() => LoadBalancing.Greedy);
     let (numMachines, setNumMachines) = React.useState(() => 4);
     let (jobs, setJobs) = React.useState(() => [|1, 1, 2, 2, 3, 4|]);
     let (numJobs, setNumJobs) = React.useState(() => Array.length(jobs));
@@ -91,10 +72,12 @@ module Home = {
               </label>
               <Select
                 id="algorithm"
-                value={algoToString(algo)}
+                value={LoadBalancing.algoToString(algo)}
                 onChange={event => {
                   let newAlgo =
-                    stringToAlgo(ReactEvent.Form.target(event)##value);
+                    LoadBalancing.stringToAlgo(
+                      ReactEvent.Form.target(event)##value,
+                    );
                   switch (newAlgo) {
                   | Some(algo) => setAlgo(_ => algo)
                   | None => () // got invalid value, so don't set state

@@ -5,6 +5,25 @@ type machine = {
   load: int,
 };
 
+type algo =
+  | Greedy
+  | Ordered;
+
+let algoToString = algo => {
+  switch (algo) {
+  | Greedy => "greedy"
+  | Ordered => "ordered"
+  };
+};
+
+let stringToAlgo = str => {
+  switch (str) {
+  | "greedy" => Some(Greedy)
+  | "ordered" => Some(Ordered)
+  | _ => None
+  };
+};
+
 let createMachine: int => machine = id => {id, jobs: [], load: 0};
 
 // Produces a machine that is identical to the given machine, but with the given job added
@@ -40,9 +59,10 @@ let greedy: (array(job), int) => array(machine) =
     machines;
   };
 
-let ordered: (array(job), int) => array(machine) = (jobs, m) => {
-  // Sort the jobs in decreasing order before running the regular greedy algo
-  let jobsCopy = Array.copy(jobs); // don't modify the input array
-  Array.fast_sort((job1, job2) => job2 - job1, jobsCopy);
-  greedy(jobsCopy, m);
-};
+let ordered: (array(job), int) => array(machine) =
+  (jobs, m) => {
+    // Sort the jobs in decreasing order before running the regular greedy algo
+    let jobsCopy = Array.copy(jobs); // don't modify the input array
+    Array.fast_sort((job1, job2) => job2 - job1, jobsCopy);
+    greedy(jobsCopy, m);
+  };
