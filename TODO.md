@@ -1,8 +1,7 @@
-- memoize calculations?
-- display running time
+- do calculations in useEffect
 - run algo async
   - time out after a while
-  - report running time
   - reduce restrictions on input
 - footer
 - implement brute force/PTAS
+- allow high res timing in FF: https://developer.mozilla.org/en-US/docs/Web/API/Performance/now#Reduced_time_precision

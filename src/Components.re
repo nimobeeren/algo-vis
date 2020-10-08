@@ -172,10 +172,8 @@ module Select = {
 };
 
 module ColorModeToggle = {
-  type element;
-
   [@bs.val] [@bs.scope ("window", "document")]
-  external root: element = "documentElement";
+  external root: Dom.element = "documentElement";
 
   [@bs.val] [@bs.scope ("window", "document", "documentElement", "style")]
   external rootGetPropertyValue: string => string = "getPropertyValue";
@@ -183,7 +181,7 @@ module ColorModeToggle = {
   [@bs.val] [@bs.scope ("window", "document", "documentElement", "style")]
   external rootSetProperty: (string, string) => unit = "setProperty";
 
-  [@bs.val] external getComputedStyle: element => 'a = "getComputedStyle";
+  [@bs.val] external getComputedStyle: Dom.element => 'a = "getComputedStyle";
 
   [@bs.val] [@bs.scope "localStorage"]
   external localStorageSetItem: (string, string) => unit = "setItem";

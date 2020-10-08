@@ -20,6 +20,8 @@ module Home = {
     };
   };
 
+  [@bs.scope "performance"] [@bs.val] external now: unit => float = "now";
+
   [@react.component]
   let make = () => {
     let (algo, setAlgo) = React.useState(() => Greedy);
@@ -49,12 +51,17 @@ module Home = {
       (numJobs, jobs),
     );
 
+    let startTime = now();
+
     let result =
       switch (algo) {
       | Greedy => LoadBalancing.greedy(jobs, numMachines)
       | Ordered => LoadBalancing.ordered(jobs, numMachines)
       };
     let makespan = LoadBalancing.getMakespan(result);
+
+    let endTime = now();
+    let runningTime = endTime -. startTime;
 
     <main>
       <aside>
@@ -161,7 +168,8 @@ module Home = {
                 {React.int(makespan)}
               </output>
               <p role="note">
-                {React.string("Actual running time: 69 ms")}
+                {React.string("Actual running time: ")}
+                {React.string(Utils.durationToString(runningTime))}
               </p>
             </div>
           </div>
