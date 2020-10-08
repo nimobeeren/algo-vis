@@ -28,6 +28,9 @@ module Home = {
     let (numMachines, setNumMachines) = React.useState(() => 4);
     let (jobs, setJobs) = React.useState(() => [|1, 1, 2, 2, 3, 4|]);
     let (numJobs, setNumJobs) = React.useState(() => Array.length(jobs));
+    let (result, setResult) = React.useState(() => None);
+    let (makespan, setMakespan) = React.useState(() => None);
+    let (runningTime, setRunningTime) = React.useState(() => None);
 
     React.useEffect2(
       () => {
@@ -51,17 +54,31 @@ module Home = {
       (numJobs, jobs),
     );
 
-    let startTime = now();
+    React.useEffect3(
+      () => {
+        let startTime = now();
 
-    let result =
-      switch (algo) {
-      | Greedy => LoadBalancing.greedy(jobs, numMachines)
-      | Ordered => LoadBalancing.ordered(jobs, numMachines)
-      };
-    let makespan = LoadBalancing.getMakespan(result);
+        let newResult =
+          switch (algo) {
+          | Greedy => Some(LoadBalancing.greedy(jobs, numMachines))
+          | Ordered => Some(LoadBalancing.ordered(jobs, numMachines))
+          };
+        setResult(_ => newResult);
 
-    let endTime = now();
-    let runningTime = endTime -. startTime;
+        let newMakespan =
+          switch (newResult) {
+          | Some(res) => Some(LoadBalancing.getMakespan(res))
+          | None => None
+          };
+        setMakespan(_ => newMakespan);
+
+        let endTime = now();
+        setRunningTime(_ => Some(endTime -. startTime));
+
+        None;
+      },
+      (algo, jobs, numMachines),
+    );
 
     <main>
       <aside>
@@ -165,11 +182,20 @@ module Home = {
               </label>
               <output
                 id="result" htmlFor="input-form" className="result-number">
-                {React.int(makespan)}
+                {switch (makespan) {
+                 | Some(makespan) => React.int(makespan)
+                 | None => React.null
+                 }}
               </output>
               <p role="note">
-                {React.string("Actual running time: ")}
-                {React.string(Utils.durationToString(runningTime))}
+                {switch (runningTime) {
+                 | None => React.null
+                 | Some(runningTime) =>
+                   React.string(
+                     "Actual running time: "
+                     ++ Utils.durationToString(runningTime),
+                   )
+                 }}
               </p>
             </div>
           </div>

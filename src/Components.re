@@ -27,41 +27,50 @@ module Job = {
 
 module BarPlot = {
   [@react.component]
-  let make = (~machines: array(LoadBalancing.machine)) => {
-    let makespan = LoadBalancing.getMakespan(machines);
+  let make = (~machines: option(array(LoadBalancing.machine))) => {
+    let makespan =
+      switch (machines) {
+      | Some(machines) => Some(LoadBalancing.getMakespan(machines))
+      | None => None
+      };
 
     <div
       className="barplot"
       role="figure"
       ariaLabel="Visualization of the computed solution to the load balancing problem">
-      {React.array(
-         Array.map(
-           (machine: LoadBalancing.machine) => {
-             let height =
-               float_of_int(machine.load) /. float_of_int(makespan) *. 100.;
-             let hasMaxMakespan = machine.load == makespan;
-             <div
-               className="machine"
-               key={string_of_int(machine.id)}
-               ariaLabel="machine"
-               style={ReactDOM.Style.make(
-                 ~height=Js.Float.toString(height) ++ "%",
-                 (),
-               )}>
-               {React.array(
-                  Array.init(List.length(machine.jobs), i => {
-                    <Job
-                      key={string_of_int(i)}
-                      size={List.nth(machine.jobs, i)}
-                      isHighlighted=hasMaxMakespan
-                    />
-                  }),
-                )}
-             </div>;
-           },
-           machines,
-         ),
-       )}
+      {switch (machines, makespan) {
+       | (None, _) => React.null
+       | (_, None) => React.null
+       | (Some(machines), Some(makespan)) =>
+         React.array(
+           Array.map(
+             (machine: LoadBalancing.machine) => {
+               let height =
+                 float_of_int(machine.load) /. float_of_int(makespan) *. 100.;
+               let hasMaxMakespan = machine.load == makespan;
+               <div
+                 className="machine"
+                 key={string_of_int(machine.id)}
+                 ariaLabel="machine"
+                 style={ReactDOM.Style.make(
+                   ~height=Js.Float.toString(height) ++ "%",
+                   (),
+                 )}>
+                 {React.array(
+                    Array.init(List.length(machine.jobs), i => {
+                      <Job
+                        key={string_of_int(i)}
+                        size={List.nth(machine.jobs, i)}
+                        isHighlighted=hasMaxMakespan
+                      />
+                    }),
+                  )}
+               </div>;
+             },
+             machines,
+           ),
+         )
+       }}
     </div>;
   };
 };
