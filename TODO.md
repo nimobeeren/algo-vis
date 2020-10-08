@@ -1,4 +1,5 @@
 - implement brute force/PTAS
+- unit tests for load balancing algos
 - set correct running time/approx ratio for different algos
 - run algo async
   - time out after a while
