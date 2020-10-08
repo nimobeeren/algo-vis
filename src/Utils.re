@@ -16,7 +16,7 @@ let durationToString: float => string = millis => {
       // so we can't give a better estimation than this
       "<1 ms";
     } else {
-      Js.Float.toString(floor(micros)) ++ " us";
+      Js.Float.toString(floor(micros)) ++ {js| μs|js};
     }
   } else if (millis < 1000.0) {
     Js.Float.toString(floor(millis)) ++ " ms";
