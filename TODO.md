@@ -4,4 +4,4 @@
 - footer
 - implement brute force/PTAS
 - allow high res timing in FF: https://developer.mozilla.org/en-US/docs/Web/API/Performance/now#Reduced_time_precision
-- use <term> tags to explain terms
+

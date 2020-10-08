@@ -178,7 +178,7 @@ module Home = {
           <div className="aside__content" role="presentation">
             <div className="group" role="region" ariaLabelledby="result-label">
               <label id="result-label" htmlFor="result">
-                {React.string("Result")}
+                {React.string("Makespan")}
               </label>
               <output
                 id="result" htmlFor="input-form" className="result-number">
