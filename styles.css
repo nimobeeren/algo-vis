@@ -76,7 +76,7 @@ aside {
   height: 100%;
 }
 
-.aside {
+.aside__scroll {
   width: 100%;
   max-width: 376px;
   max-height: 100%;
@@ -84,7 +84,7 @@ aside {
 }
 
 @media screen and (min-width: 1024px) {
-  .aside {
+  .aside__scroll {
     max-width: 276px;
     overflow-y: auto;
   }
@@ -105,26 +105,35 @@ aside {
 }
 
 /*
-This element is positioned over the bottom padding of its container.
-The idea is to create a fade effect for overflowing content, to indicate that
-there is more content.
+ * The before and after pseudo elements are meant to be positioned on top of the
+ * padding of their container.
+ * The idea is to create a fade effect for overflowing content, to indicate that
+ * there is more content and to make the transition less harsh.
 */
-aside::after {
-  content: "";
+aside::before, aside::after {
   display: none;
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
   height: 32px; /* should be the same as bottom padding of container */
-  background: linear-gradient(to top, var(--color-light), rgba(0, 0, 0, 0));
   z-index: 1;
 }
 
 @media screen and (min-width: 1024px) {
-  aside::after {
+  /* The fade is only needed on desktop, because on mobile the container grows to fit */
+  aside::before, aside::after {
     display: block;
   }
+}
+
+aside::before {
+  content: linear-gradient(to bottom, var(--color-light), rgba(0, 0, 0, 0));
+  top: 0;
+}
+
+aside::after {
+  content: linear-gradient(to top, var(--color-light), rgba(0, 0, 0, 0));
+  bottom: 0;
 }
 
 section {
@@ -286,9 +295,9 @@ borders of the parent element
 
 .select select {
   /* 
-  This element overflows its container by 2px on top and bottom.
-  This is because we want the clickable area to include the borders, and to
-  make the options display underneath the border.
+   * This element overflows its container by 2px on top and bottom.
+   * This is because we want the clickable area to include the borders, and to
+   * make the options display underneath the border.
   */
   width: 100%;
   height: 32px;

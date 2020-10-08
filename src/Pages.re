@@ -58,7 +58,7 @@ module Home = {
 
     <main>
       <aside>
-        <form id="input-form" action="#" className="aside">
+        <form id="input-form" action="#" className="aside__scroll">
           <div className="aside__content" role="presentation">
             <div
               className="group" role="region" ariaLabelledby="algorithm-label">
@@ -151,7 +151,7 @@ module Home = {
         <BarPlot machines=result />
       </section>
       <aside>
-        <div className="aside" role="presentation">
+        <div className="aside__scroll" role="presentation">
           <div className="aside__content" role="presentation">
             <div className="group" role="region" ariaLabelledby="result-label">
               <label id="result-label" htmlFor="result">
