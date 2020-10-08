@@ -238,10 +238,12 @@ p {
 }
 
 /* 
-The tube cover is a presentation element that breaks up the top and bottom
-borders of the parent element
-*/
-.tube__cover {
+ * This pseudo element breaks up the top and bottom borders of the parent element,
+ * creating a tube-like appearance.
+ */
+.tube::before {
+  content: "";
+  display: block;
   position: absolute;
   top: -2px;
   bottom: -2px;
@@ -251,29 +253,24 @@ borders of the parent element
   z-index: -1;
 }
 
-.tube__cover--large {
+.tube--large::before {
   left: 16px;
   right: 16px;
 }
 
-.tube__cover--bottom {
+.select.tube::before {
+  right: 30px;
+}
+
+.number-input.tube::before {
+  right: 14px;
+}
+
+.tube--bottom::before {
   border-bottom: 2px solid var(--color-secondary);
   transition-property: border-color;
   transition-duration: 150ms;
   transition-timing-function: ease-in-out;
-}
-
-.tube__cover--select {
-  right: 30px;
-}
-
-.tube__cover--number-input {
-  right: 14px;
-}
-
-.tube__cover ~ * {
-  /* Ensure content is above cover */
-  z-index: 1;
 }
 
 .machine {
@@ -329,8 +326,8 @@ option {
   pointer-events: none;
 }
 
-.select:focus-within .tube__cover--bottom,
-.number-input:focus-within .tube__cover--bottom {
+.select:focus-within.tube--bottom::before,
+.number-input:focus-within.tube--bottom::before {
   border-color: var(--color-primary);
 }
 

@@ -11,7 +11,6 @@ module Job = {
         ~flexGrow=string_of_int(size),
         (),
       )}>
-      <div className="tube__cover" role="presentation" />
       <svg className="job__content" role="presentation" viewBox="0 -4 80 48">
         <text
           x="50%"
@@ -81,10 +80,7 @@ module NumberInput = {
       | None => ""
       };
 
-    <div className="number-input tube" role="presentation">
-      <div
-        className="tube__cover tube__cover--bottom tube__cover--number-input"
-      />
+    <div className="number-input tube tube--bottom" role="presentation">
       <input
         type_="number"
         value={string_of_int(value)}
@@ -166,11 +162,7 @@ module MultiNumberInput = {
 module Select = {
   [@react.component]
   let make = (~children, ~id, ~value, ~onChange) => {
-    <div className="select tube" role="presentation">
-      <div
-        className="tube__cover tube__cover--bottom tube__cover--select"
-        role="presentation"
-      />
+    <div className="select tube tube--bottom" role="presentation">
       <select id value onChange> children </select>
       <svg className="select__arrow" role="presentation" viewBox="0 0 12 12">
         <polygon points="1,3 11,3 6,11.66" />

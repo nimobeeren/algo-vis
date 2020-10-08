@@ -147,7 +147,6 @@ module Home = {
         </form>
       </aside>
       <section className="tube tube--large">
-        <div className="tube__cover tube__cover--large" role="presentation" />
         <BarPlot machines=result />
       </section>
       <aside>
