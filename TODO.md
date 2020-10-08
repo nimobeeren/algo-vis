@@ -1,7 +1,10 @@
+- implement brute force/PTAS
+- set correct running time/approx ratio for different algos
 - run algo async
   - time out after a while
   - reduce restrictions on input
 - footer
-- implement brute force/PTAS
 - allow high res timing in FF: https://developer.mozilla.org/en-US/docs/Web/API/Performance/now#Reduced_time_precision
-
+- number input improvements:
+  - hold mouse to change fast
+  - focus input when clicking buttons (to allow typing)
