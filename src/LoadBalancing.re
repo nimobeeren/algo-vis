@@ -90,6 +90,7 @@ let rec bruteForce = (jobs, machines) => {
   // FUNCTIONAL
   
   // TODO: something's gotta be wrong here
+  // Great resource: http://reasonmlhub.com/exploring-reasonml/ch_recursion.html
   let rec repeat = (i, machines, minMakespan) => {
     if (i == 0) {
       machines
