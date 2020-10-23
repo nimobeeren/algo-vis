@@ -38,7 +38,19 @@ let assign: (job, machine) => machine =
   };
 
 // TODO
-let unassign = () => ();
+let unassign: (job, machine) => machine = (job, machine) => {
+  let isFound = ref(false);
+  let newJobs = List.filter(j => {
+    if (!isFound^ && j == job) {
+      isFound := true;
+      false;
+    } else {
+      true;
+    }
+  }, machine.jobs);
+
+  {...machine, jobs: newJobs, load: machine.load - job}
+};
 
 // The makespan is the maximum load across all machines
 let getMakespan: array(machine) => int =
@@ -75,32 +87,33 @@ let ordered: loadBalancer =
     greedy(jobsCopy, m);
   };
 
-let rec bruteForce = (jobs, machines) => {
-  // if |jobs| = 0
-  //   return machines
+let bruteForce = (jobs, m) => {
+  let machines = Array.init(m, createMachine);
 
-  // IMPERATIVE
-  // for (i = 0 to m - 1)
-  //   machines[i] = assign(jobs[0], machines[i])
-  //   let result[i] = bruteForce(jobs \ jobs[0], machines)
-  //   machines[i] = unassign(jobs[0], machines[i])
-  // end for
-  // return argmin(getMakespan(result[0]), ..., getMakespan(result[m-1]))
-
-  // FUNCTIONAL
-  
-  // TODO: something's gotta be wrong here
-  // Great resource: http://reasonmlhub.com/exploring-reasonml/ch_recursion.html
-  let rec repeat = (i, machines, minMakespan) => {
-    if (i == 0) {
-      machines
+  let rec bruteForceRec = (jobsRec, machines) =>
+    if (Array.length(jobsRec) == 0) {
+      machines;
     } else {
-      machines[i-1] = assign(jobs[0], machines[i-1])
-      let result = bruteForce(jobs \ jobs[0], machines)
-      let resultMakespan = getMakespan(result);
-      machines[i-1] = unassign(jobs[0], machines[i-1])
+      let results = Array.init(m, i => {
+        machines[i] = assign(jobsRec[0], machines[i]);
+        let result = Array.copy(bruteForceRec(Array.sub(jobsRec, 1, Array.length(jobsRec) - 1), machines));
+        machines[i] = unassign(jobsRec[0], machines[i]);
+        result;
+      });
 
-      repeat(i - 1, machines, min(minMakespan, resultMakespan))
-    }
-  }
-}
+      let bestMachines = ref([||]);
+      let bestMakespan = ref(max_int);
+
+      for (i in 0 to m-1) {
+        let makespan = getMakespan(results[i]);
+        if (makespan < bestMakespan^) {
+          bestMachines := results[i];
+          bestMakespan := makespan;
+        }
+      }
+
+      bestMachines^;
+    };
+
+  bruteForceRec(jobs, machines);
+};
