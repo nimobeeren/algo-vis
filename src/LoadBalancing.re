@@ -16,7 +16,7 @@ let algoToString = algo => {
   switch (algo) {
   | Greedy => "greedy"
   | Ordered => "ordered"
-  | BruteForce => "bruteforce"
+  | BruteForce => "bruteForce"
   };
 };
 
@@ -24,7 +24,7 @@ let stringToAlgo = str => {
   switch (str) {
   | "greedy" => Some(Greedy)
   | "ordered" => Some(Ordered)
-  | "bruteforce" => Some(BruteForce)
+  | "bruteForce" => Some(BruteForce)
   | _ => None
   };
 };

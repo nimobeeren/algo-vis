@@ -43,6 +43,7 @@ module Home = {
           switch (algo) {
           | Greedy => Some(LoadBalancing.greedy(jobs, numMachines))
           | Ordered => Some(LoadBalancing.ordered(jobs, numMachines))
+          | BruteForce => Some(LoadBalancing.bruteForce(jobs, numMachines))
           };
         setResult(_ => newResult);
 
@@ -86,6 +87,9 @@ module Home = {
                 <option value="greedy"> {React.string("Greedy")} </option>
                 <option value="ordered">
                   {React.string("Sorted Greedy")}
+                </option>
+                <option value="bruteForce">
+                  {React.string("Brute Force")}
                 </option>
               </Select>
               <div className="group__bottom-text">
