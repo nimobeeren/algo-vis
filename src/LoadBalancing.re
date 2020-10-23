@@ -12,6 +12,7 @@ type algo =
   | Ordered
   | BruteForce;
 
+// Gets a uniquely identifying string for each algo.
 let algoToString = algo => {
   switch (algo) {
   | Greedy => "greedy"
@@ -20,6 +21,26 @@ let algoToString = algo => {
   };
 };
 
+// Gets the worst-case running time for each algo, derived from the code.
+// Value is returned as HTML to allow for sub/superscript.
+let algoToRunningTime = algo => {
+  switch (algo) {
+    | Greedy => "O(n<sup>2</sup>)"
+    | Ordered => "O(n<sup>2</sup>)"
+    | BruteForce => "O(n!)"
+  }
+}
+
+// Gets the approximation ratio for each algo.
+let algoToApproxRatio = algo => {
+  switch (algo) {
+    | Greedy => "2 - 1/m"
+    | Ordered => "3/2"
+    | BruteForce => "1"
+  }
+}
+
+// Gets an algo from its uniquely identifying string.
 let stringToAlgo = str => {
   switch (str) {
   | "greedy" => Some(Greedy)
@@ -37,7 +58,8 @@ let assign: (job, machine) => machine =
     {...machine, jobs: [job, ...machine.jobs], load: machine.load + job};
   };
 
-// TODO
+// Produces a machine that is identical to the given machine, but with one job of the given
+// size removed. If no such job is found, the jobs are unchanged.
 let unassign: (job, machine) => machine = (job, machine) => {
   let isFound = ref(false);
   let newJobs = List.filter(j => {
@@ -79,6 +101,8 @@ let greedy: loadBalancer =
     machines;
   };
 
+// Same as greedy(), but sorts the jobs in descending order first.
+// Running time: O(n^2 log n)
 let ordered: loadBalancer =
   (jobs, m) => {
     // Sort the jobs in decreasing order before running the regular greedy algo
@@ -87,6 +111,9 @@ let ordered: loadBalancer =
     greedy(jobsCopy, m);
   };
 
+// Brute force algorithm that tries all possible assignments of jobs to machines
+// and returns a solution with minimum makespan.
+// Running time: O(n!)
 let bruteForce = (jobs, m) => {
   let machines = Array.init(m, createMachine);
 

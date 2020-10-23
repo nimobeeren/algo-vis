@@ -94,15 +94,12 @@ module Home = {
               </Select>
               <div className="group__bottom-text">
                 <p role="note">
-                  {React.string("Worst-case running time: ")}
-                  <span ariaLabel="Oh of n squared">
-                    {React.string("O(n")}
-                    <sup> {React.string("2")} </sup>
-                    {React.string(")")}
-                  </span>
+                  {React.string("Running time: ")}
+                  <span dangerouslySetInnerHTML={"__html": LoadBalancing.algoToRunningTime(algo)} />
                 </p>
                 <p role="note">
-                  {React.string("Approximation ratio: 2 - 1/m")}
+                  {React.string("Approximation ratio: ")}
+                  {React.string(LoadBalancing.algoToApproxRatio(algo))}
                 </p>
               </div>
             </div>

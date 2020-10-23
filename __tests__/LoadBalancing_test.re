@@ -3,8 +3,7 @@ open Expect;
 
 describe("LoadBalancing", () => {
   describe("greedy()", () => {
-    // greedy() is suboptimal for this case, but ordered() is optimal
-    test("case 1", () => {
+    test("case 1 suboptimal", () => {
       let jobs = [|1, 2, 3|];
       let m = 2;
       let expectedResult: array(LoadBalancing.machine) = [|
@@ -17,8 +16,7 @@ describe("LoadBalancing", () => {
   });
 
   describe("bruteForce()", () => {
-    // greedy() is suboptimal for this case, but ordered() is optimal
-    test("case 1", () => {
+    test("case 1 optimal", () => {
       let jobs = [|1, 2, 3|];
       let m = 2;
       let expectedResult: array(LoadBalancing.machine) = [|
@@ -29,8 +27,7 @@ describe("LoadBalancing", () => {
       expect(LoadBalancing.bruteForce(jobs, m)) |> toEqual(expectedResult);
     });
 
-    // Both greedy() and ordered() are suboptimal for this case
-    test("case 2", () => {
+    test("case 2 optimal", () => {
       let jobs = [|2, 3, 2, 2, 3|];
       let m = 2;
       let expectedResult: array(LoadBalancing.machine) = [|
