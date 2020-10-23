@@ -5,8 +5,6 @@ type machine = {
   load: int,
 };
 
-type loadBalancer = (array(job), int) => array(machine);
-
 type algo =
   | Greedy
   | Ordered
@@ -25,20 +23,20 @@ let algoToString = algo => {
 // Value is returned as HTML to allow for sub/superscript.
 let algoToRunningTime = algo => {
   switch (algo) {
-    | Greedy => "O(n<sup>2</sup>)"
-    | Ordered => "O(n<sup>2</sup>)"
-    | BruteForce => "O(n!)"
-  }
-}
+  | Greedy => "O(n<sup>2</sup>)"
+  | Ordered => "O(n<sup>2</sup>)"
+  | BruteForce => "O(n!)"
+  };
+};
 
 // Gets the approximation ratio for each algo.
 let algoToApproxRatio = algo => {
   switch (algo) {
-    | Greedy => "2 - 1/m"
-    | Ordered => "3/2"
-    | BruteForce => "1"
-  }
-}
+  | Greedy => "2 - 1/m"
+  | Ordered => "3/2"
+  | BruteForce => "1"
+  };
+};
 
 // Gets an algo from its uniquely identifying string.
 let stringToAlgo = str => {
@@ -60,19 +58,23 @@ let assign: (job, machine) => machine =
 
 // Produces a machine that is identical to the given machine, but with one job of the given
 // size removed. If no such job is found, the jobs are unchanged.
-let unassign: (job, machine) => machine = (job, machine) => {
-  let isFound = ref(false);
-  let newJobs = List.filter(j => {
-    if (!isFound^ && j == job) {
-      isFound := true;
-      false;
-    } else {
-      true;
-    }
-  }, machine.jobs);
+let unassign: (job, machine) => machine =
+  (job, machine) => {
+    let isFound = ref(false);
+    let newJobs =
+      List.filter(
+        j =>
+          if (! isFound^ && j == job) {
+            isFound := true;
+            false;
+          } else {
+            true;
+          },
+        machine.jobs,
+      );
 
-  {...machine, jobs: newJobs, load: machine.load - job}
-};
+    {...machine, jobs: newJobs, load: machine.load - job};
+  };
 
 // The makespan is the maximum load across all machines
 let getMakespan: array(machine) => int =
@@ -84,7 +86,7 @@ let getMakespan: array(machine) => int =
 // Greedy algorithm that assigns each job to the machine with the smallest load
 // at that time.
 // Running time: O(n^2 log n)
-let greedy: loadBalancer =
+let greedy: (array(job), int) => array(machine) =
   (jobs, m) => {
     let machines: array(machine) = Array.init(m, createMachine);
 
@@ -103,7 +105,7 @@ let greedy: loadBalancer =
 
 // Same as greedy(), but sorts the jobs in descending order first.
 // Running time: O(n^2 log n)
-let ordered: loadBalancer =
+let ordered: (array(job), int) => array(machine) =
   (jobs, m) => {
     // Sort the jobs in decreasing order before running the regular greedy algo
     let jobsCopy = Array.copy(jobs); // don't modify the input array
@@ -114,33 +116,44 @@ let ordered: loadBalancer =
 // Brute force algorithm that tries all possible assignments of jobs to machines
 // and returns a solution with minimum makespan.
 // Running time: O(n!)
-let bruteForce = (jobs, m) => {
-  let machines = Array.init(m, createMachine);
+let bruteForce: (array(job), int) => array(machine) =
+  (jobs, m) => {
+    let machines = Array.init(m, createMachine);
 
-  let rec bruteForceRec = (jobsRec, machines) =>
-    if (Array.length(jobsRec) == 0) {
-      machines;
-    } else {
-      let results = Array.init(m, i => {
-        machines[i] = assign(jobsRec[0], machines[i]);
-        let result = Array.copy(bruteForceRec(Array.sub(jobsRec, 1, Array.length(jobsRec) - 1), machines));
-        machines[i] = unassign(jobsRec[0], machines[i]);
-        result;
-      });
+    let rec bruteForceRec = (jobsRec, machines) =>
+      if (Array.length(jobsRec) == 0) {
+        machines;
+      } else {
+        let results =
+          Array.init(
+            m,
+            i => {
+              machines[i] = assign(jobsRec[0], machines[i]);
+              let result =
+                Array.copy(
+                  bruteForceRec(
+                    Array.sub(jobsRec, 1, Array.length(jobsRec) - 1),
+                    machines,
+                  ),
+                );
+              machines[i] = unassign(jobsRec[0], machines[i]);
+              result;
+            },
+          );
 
-      let bestMachines = ref([||]);
-      let bestMakespan = ref(max_int);
+        let bestMachines = ref([||]);
+        let bestMakespan = ref(max_int);
 
-      for (i in 0 to m-1) {
-        let makespan = getMakespan(results[i]);
-        if (makespan < bestMakespan^) {
-          bestMachines := results[i];
-          bestMakespan := makespan;
-        }
-      }
+        for (i in 0 to m - 1) {
+          let makespan = getMakespan(results[i]);
+          if (makespan < bestMakespan^) {
+            bestMachines := results[i];
+            bestMakespan := makespan;
+          };
+        };
 
-      bestMachines^;
-    };
+        bestMachines^;
+      };
 
-  bruteForceRec(jobs, machines);
-};
+    bruteForceRec(jobs, machines);
+  };
