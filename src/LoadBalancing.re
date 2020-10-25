@@ -116,27 +116,27 @@ let ordered: (array(job), int) => array(machine) =
 // Brute force algorithm that tries all possible assignments of jobs to machines
 // and returns a solution with minimum makespan.
 // Running time: O(n!)
+// TODO: prune when makespan is larger than best
+// TODO: prune equivalent states
 let bruteForce: (array(job), int) => array(machine) =
   (jobs, m) => {
     let machines = Array.init(m, createMachine);
 
-    let rec bruteForceRec = (jobsRec, machines) =>
-      if (Array.length(jobsRec) == 0) {
-        machines;
-      } else {
+    // Convert array of jobs to list
+    let jobsList = List.init(Array.length(jobs), Array.get(jobs));
+
+    let rec bruteForceRec = (jobsList, machines) =>
+      switch (jobsList) {
+      | [] => machines
+      | [head, ...tail] =>
         let results =
           Array.init(
             m,
             i => {
-              machines[i] = assign(jobsRec[0], machines[i]);
+              machines[i] = assign(head, machines[i]);
               let result =
-                Array.copy(
-                  bruteForceRec(
-                    Array.sub(jobsRec, 1, Array.length(jobsRec) - 1),
-                    machines,
-                  ),
-                );
-              machines[i] = unassign(jobsRec[0], machines[i]);
+                Array.copy(bruteForceRec(tail, machines));
+              machines[i] = unassign(head, machines[i]);
               result;
             },
           );
@@ -155,5 +155,5 @@ let bruteForce: (array(job), int) => array(machine) =
         bestMachines^;
       };
 
-    bruteForceRec(jobs, machines);
+    bruteForceRec(jobsList, machines);
   };
