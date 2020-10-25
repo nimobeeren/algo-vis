@@ -58,6 +58,8 @@ let assign: (job, machine) => machine =
 
 // Produces a machine that is identical to the given machine, but with one job of the given
 // size removed. If no such job is found, the jobs are unchanged.
+// TODO: we can probably just set jobs to Array.tl(machines.jobs) since we only ever unassign
+// the first job in the list
 let unassign: (job, machine) => machine =
   (job, machine) => {
     let isFound = ref(false);
@@ -129,28 +131,26 @@ let bruteForce: (array(job), int) => array(machine) =
       switch (jobsList) {
       | [] => machines
       | [head, ...tail] =>
-        let results =
-          Array.init(
-            m,
-            i => {
-              machines[i] = assign(head, machines[i]);
-              let result =
-                Array.copy(bruteForceRec(tail, machines));
-              machines[i] = unassign(head, machines[i]);
-              result;
-            },
-          );
-
         let bestMachines = ref([||]);
         let bestMakespan = ref(max_int);
 
-        for (i in 0 to m - 1) {
-          let makespan = getMakespan(results[i]);
-          if (makespan < bestMakespan^) {
-            bestMachines := results[i];
-            bestMakespan := makespan;
-          };
-        };
+        let machinesCopy = Array.copy(machines);
+        // This is essentially just a for loop, not really functional style
+        Array.iteri(
+          (i, _) => {
+            machinesCopy[i] = assign(head, machinesCopy[i]);
+
+            let result = bruteForceRec(tail, machinesCopy);
+            let makespan = getMakespan(result);
+            if (makespan < bestMakespan^) {
+              bestMachines := Array.copy(result);
+              bestMakespan := makespan;
+            };
+
+            machinesCopy[i] = unassign(head, machinesCopy[i]);
+          },
+          machinesCopy,
+        );
 
         bestMachines^;
       };
