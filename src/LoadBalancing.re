@@ -123,9 +123,7 @@ let ordered: (array(job), int) => array(machine) =
 let bruteForce: (array(job), int) => array(machine) =
   (jobs, m) => {
     let machines = Array.init(m, createMachine);
-
-    // Convert array of jobs to list
-    let jobsList = List.init(Array.length(jobs), Array.get(jobs));
+    let jobsList = Array.to_list(jobs);
 
     let rec bruteForceRec = (jobsList, machines) =>
       switch (jobsList) {
