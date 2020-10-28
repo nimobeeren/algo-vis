@@ -85,13 +85,10 @@ let getMakespan: array(machine) => int =
     machines[0].load;
   };
 
-// Greedy algorithm that assigns each job to the machine with the smallest load
-// at that time.
-// Running time: O(n^2 log n)
-let greedy: (array(job), int) => array(machine) =
-  (jobs, m) => {
-    let machines: array(machine) = Array.init(m, createMachine);
-
+// Function that is used internally by e.g. greedy(), which takes an array of
+// machines instead of creating them when called
+let greedyInternal: (array(job), array(machine)) => array(machine) =
+  (jobs, machines) => {
     // Assign each job to the machine with smallest load
     Array.iter(
       job => {
@@ -103,6 +100,15 @@ let greedy: (array(job), int) => array(machine) =
       jobs,
     );
     machines;
+  };
+
+// Greedy algorithm that assigns each job to the machine with the smallest load
+// at that time.
+// Running time: O(n^2 log n)
+let greedy: (array(job), int) => array(machine) =
+  (jobs, m) => {
+    let machines = Array.init(m, createMachine);
+    greedyInternal(jobs, machines);
   };
 
 // Same as greedy(), but sorts the jobs in descending order first.
@@ -155,3 +161,20 @@ let bruteForce: (array(job), int) => array(machine) =
 
     bruteForceRec(jobsList, machines);
   };
+
+// Hybrid algorithm that runs the brute force algorithm on part of the input
+// jobs, and does the rest with ordered scheduling
+let ptas: (array(job), int, float) => array(machine) = (jobs, m, eps) => {
+  let jobsCopy = Array.copy(jobs); // don't modify the input array
+  Array.fast_sort((job1, job2) => job2 - job1, jobsCopy);
+
+  // Partition the array of jobs into a brute force part and a greedy part,
+  // where the proportion is determined by a parameter epsilon
+  let n = Array.length(jobs);
+  let bfJobsLength = (float_of_int(n) *. eps)->ceil->int_of_float;
+  let bfJobs = Array.sub(jobs, 0, bfJobsLength);
+  let greedyJobs = Array.sub(jobs, bfJobsLength, n - bfJobsLength);
+
+  let bfMachines = bruteForce(bfJobs, m);
+  greedyInternal(greedyJobs, bfMachines);
+};
