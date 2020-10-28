@@ -78,25 +78,14 @@ module BarPlot = {
 module NumberInput = {
   [@react.component]
   let make = (~value, ~id=?, ~ariaLabelledby=?, ~min=?, ~max=?, ~onChange) => {
-    let minString =
-      switch (min) {
-      | Some(min) => string_of_int(min)
-      | None => ""
-      };
-    let maxString =
-      switch (max) {
-      | Some(max) => string_of_int(max)
-      | None => ""
-      };
-
     <div className="number-input tube tube--bottom" role="presentation">
       <input
         type_="number"
-        value={string_of_int(value)}
+        value={Js.String.make(value)}
         id={getOptionValue(id, "")}
         ariaLabelledby={getOptionValue(ariaLabelledby, "")}
-        min=minString
-        max=maxString
+        min={Js.String.make(min)}
+        max={Js.String.make(max)}
         onChange={event => {
           let newValue = ReactEvent.Form.target(event)##value;
           onChange(newValue == "" ? 0 : int_of_string(newValue));
@@ -131,6 +120,71 @@ module NumberInput = {
                 onChange(value - 1);
               }
             | None => onChange(value - 1)
+            }
+          }>
+          <svg role="presentation" viewBox="0 0 14 14">
+            <polygon points="6,8 2.54,2 9.46,2" />
+          </svg>
+        </button>
+      </div>
+    </div>;
+  };
+};
+
+// Shameless copy of NumberInput, but works only with float values
+module FloatNumberInput = {
+  [@react.component]
+  let make = (~value, ~id=?, ~ariaLabelledby=?, ~min=?, ~max=?, ~onChange) => {
+    <div className="number-input tube tube--bottom" role="presentation">
+      <input
+        type_="number"
+        value={Js.String.make(value)}
+        id={getOptionValue(id, "")}
+        ariaLabelledby={getOptionValue(ariaLabelledby, "")}
+        min={Js.String.make(min)}
+        max={Js.String.make(max)}
+        onChange={event => {
+          let newValue = ReactEvent.Form.target(event)##value;
+          onChange(newValue == "" ? 0.0 : float_of_string(newValue));
+        }}
+      />
+      <div className="number-input__buttons" ariaHidden=true>
+        <button
+          className="number-input__button"
+          type_="button"
+          tabIndex=(-1)
+          onClick={_ =>
+            switch (max) {
+            | Some(max) =>
+              if (value < max) {
+                // Increase by 0.1, avoiding floating point errors
+                onChange(
+                  (value *. 10.0 +. 1.0) /. 10.0,
+                );
+              }
+            // Increase by 0.1, avoiding floating point errors
+            | None => onChange((value *. 10.0 +. 1.0) /. 10.0)
+            }
+          }>
+          <svg role="presentation" viewBox="0 0 14 14">
+            <polygon points="6,6 2.54,12 9.46,12" />
+          </svg>
+        </button>
+        <button
+          className="number-input__button"
+          type_="button"
+          tabIndex=(-1)
+          onClick={_ =>
+            switch (min) {
+            | Some(min) =>
+              if (value > min) {
+                // Decrease by 0.1, avoiding floating point errors
+                onChange(
+                  (value *. 10.0 -. 1.0) /. 10.0,
+                );
+              }
+            // Decrease by 0.1, avoiding floating point errors
+            | None => onChange((value *. 10.0 -. 1.0) /. 10.0)
             }
           }>
           <svg role="presentation" viewBox="0 0 14 14">
