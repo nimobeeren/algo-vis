@@ -43,6 +43,7 @@ module Home = {
           switch (algo) {
           | Greedy => Some(LoadBalancing.greedy(jobs, numMachines))
           | Ordered => Some(LoadBalancing.ordered(jobs, numMachines))
+          | PTAS => Some(LoadBalancing.ptas(jobs, numMachines, 0.5)) // TODO: input for eps
           | BruteForce => Some(LoadBalancing.bruteForce(jobs, numMachines))
           };
         setResult(_ => newResult);
@@ -88,6 +89,7 @@ module Home = {
                 <option value="ordered">
                   {React.string("Sorted Greedy")}
                 </option>
+                <option value="ptas"> {React.string("PTAS")} </option>
                 <option value="bruteForce">
                   {React.string("Brute Force")}
                 </option>
@@ -95,7 +97,11 @@ module Home = {
               <div className="group__bottom-text">
                 <p role="note">
                   {React.string("Running time: ")}
-                  <span dangerouslySetInnerHTML={"__html": LoadBalancing.algoToRunningTime(algo)} />
+                  <span
+                    dangerouslySetInnerHTML={
+                      "__html": LoadBalancing.algoToRunningTime(algo),
+                    }
+                  />
                 </p>
                 <p role="note">
                   {React.string("Approximation ratio: ")}

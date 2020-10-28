@@ -8,6 +8,7 @@ type machine = {
 type algo =
   | Greedy
   | Ordered
+  | PTAS
   | BruteForce;
 
 // Gets a uniquely identifying string for each algo.
@@ -15,6 +16,7 @@ let algoToString = algo => {
   switch (algo) {
   | Greedy => "greedy"
   | Ordered => "ordered"
+  | PTAS => "ptas"
   | BruteForce => "bruteForce"
   };
 };
@@ -25,6 +27,7 @@ let algoToRunningTime = algo => {
   switch (algo) {
   | Greedy => "O(n<sup>2</sup>)"
   | Ordered => "O(n<sup>2</sup>)"
+  | PTAS => "TODO" // TODO
   | BruteForce => "O(n!)"
   };
 };
@@ -34,6 +37,7 @@ let algoToApproxRatio = algo => {
   switch (algo) {
   | Greedy => "2 - 1/m"
   | Ordered => "3/2"
+  | PTAS => "TODO"
   | BruteForce => "1"
   };
 };
@@ -43,6 +47,7 @@ let stringToAlgo = str => {
   switch (str) {
   | "greedy" => Some(Greedy)
   | "ordered" => Some(Ordered)
+  | "ptas" => Some(PTAS)
   | "bruteForce" => Some(BruteForce)
   | _ => None
   };
