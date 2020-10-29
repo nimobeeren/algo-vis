@@ -131,7 +131,7 @@ let greedy: (array(job), int) => array(machine) =
   };
 
 // Same as greedy(), but sorts the jobs in descending order first.
-// Running time: O(n^2 log n)
+// Running time: O(n^2)
 let ordered: (array(job), int) => array(machine) =
   (jobs, m) => {
     // Sort the jobs in decreasing order before running the regular greedy algo
