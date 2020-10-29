@@ -84,11 +84,12 @@ let unassign: (job, machine) => machine =
   };
 
 // The makespan is the maximum load across all machines
+// Running time: O(n)
 let getMakespan: array(machine) => int =
-  machines => {
-    Array.fast_sort((a, b) => b.load - a.load, machines);
-    machines[0].load;
-  };
+  Array.fold_left(
+    (maximum, machine) => max(maximum, machine.load),
+    min_int,
+  );
 
 // Function that is used internally by e.g. greedy(), which takes an array of
 // machines instead of creating them when called
@@ -97,19 +98,32 @@ let greedyInternal: (array(job), array(machine)) => array(machine) =
     // Assign each job to the machine with smallest load
     Array.iter(
       job => {
+        // Find the index of the machine with smallest load
         // TODO: machine with smallest load could be maintained using a min-heap,
-        // which would be faster than sorting the array every time
-        Array.fast_sort((a, b) => a.load - b.load, machines);
-        machines[0] = assign(job, machines[0]);
+        // which would be faster than finding the minimum in the array every time
+        let index = ref(-1);
+        let minimum = ref(max_int);
+        Array.iteri(
+          (i, machine) =>
+            if (machine.load < minimum^) {
+              index := i;
+              minimum := machine.load;
+            },
+          machines,
+        );
+
+        // Assign job to machine with smallest load
+        machines[index^] = assign(job, machines[index^]);
       },
       jobs,
     );
+
     machines;
   };
 
 // Greedy algorithm that assigns each job to the machine with the smallest load
 // at that time.
-// Running time: O(n^2 log n)
+// Running time: O(n^2)
 let greedy: (array(job), int) => array(machine) =
   (jobs, m) => {
     let machines = Array.init(m, createMachine);
@@ -117,7 +131,7 @@ let greedy: (array(job), int) => array(machine) =
   };
 
 // Same as greedy(), but sorts the jobs in descending order first.
-// Running time: O(n^2 log n)
+// Running time: O(n^2)
 let ordered: (array(job), int) => array(machine) =
   (jobs, m) => {
     // Sort the jobs in decreasing order before running the regular greedy algo
@@ -170,17 +184,18 @@ let bruteForce: (array(job), int) => array(machine) =
 // Hybrid algorithm that runs the brute force algorithm on part of the input
 // jobs, and does the rest with ordered scheduling
 // Running time: O(((1-ε)n)! + (εn)^2)
-let ptas: (array(job), int, float) => array(machine) = (jobs, m, eps) => {
-  let jobsCopy = Array.copy(jobs); // don't modify the input array
-  Array.fast_sort((job1, job2) => job2 - job1, jobsCopy);
+let ptas: (array(job), int, float) => array(machine) =
+  (jobs, m, eps) => {
+    let jobsCopy = Array.copy(jobs); // don't modify the input array
+    Array.fast_sort((job1, job2) => job2 - job1, jobsCopy);
 
-  // Partition the array of jobs into a brute force part and a greedy part,
-  // where the proportion (brute force) : greedy = (1 - eps) : eps
-  let n = Array.length(jobs);
-  let greedyJobsLength = (float_of_int(n) *. eps)->floor->int_of_float;
-  let bfJobs = Array.sub(jobs, 0, n - greedyJobsLength);
-  let greedyJobs = Array.sub(jobs, n - greedyJobsLength, greedyJobsLength);
+    // Partition the array of jobs into a brute force part and a greedy part,
+    // where the proportion (brute force) : greedy = (1 - eps) : eps
+    let n = Array.length(jobs);
+    let greedyJobsLength = (float_of_int(n) *. eps)->floor->int_of_float;
+    let bfJobs = Array.sub(jobs, 0, n - greedyJobsLength);
+    let greedyJobs = Array.sub(jobs, n - greedyJobsLength, greedyJobsLength);
 
-  let bfMachines = bruteForce(bfJobs, m);
-  greedyInternal(greedyJobs, bfMachines);
-};
+    let bfMachines = bruteForce(bfJobs, m);
+    greedyInternal(greedyJobs, bfMachines);
+  };
