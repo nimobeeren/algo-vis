@@ -84,11 +84,12 @@ let unassign: (job, machine) => machine =
   };
 
 // The makespan is the maximum load across all machines
+// Running time: O(n)
 let getMakespan: array(machine) => int =
-  machines => {
-    Array.fast_sort((a, b) => b.load - a.load, machines);
-    machines[0].load;
-  };
+  Array.fold_left(
+    (maximum, machine) => max(maximum, machine.load),
+    min_int,
+  );
 
 // Function that is used internally by e.g. greedy(), which takes an array of
 // machines instead of creating them when called
@@ -116,7 +117,7 @@ let greedyInternal: (array(job), array(machine)) => array(machine) =
       },
       jobs,
     );
-    
+
     machines;
   };
 
