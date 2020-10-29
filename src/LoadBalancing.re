@@ -27,7 +27,7 @@ let algoToRunningTime = algo => {
   switch (algo) {
   | Greedy => "O(n<sup>2</sup>)"
   | Ordered => "O(n<sup>2</sup>)"
-  | PTAS => "TODO" // TODO
+  | PTAS => {js|O(((1-ε)n)! + (εn)<sup>2</sup>)|js}
   | BruteForce => "O(n!)"
   };
 };
@@ -37,7 +37,7 @@ let algoToApproxRatio = algo => {
   switch (algo) {
   | Greedy => "2 - 1/m"
   | Ordered => "3/2"
-  | PTAS => "TODO"
+  | PTAS => {js|1 + ε|js}
   | BruteForce => "1"
   };
 };
@@ -169,16 +169,17 @@ let bruteForce: (array(job), int) => array(machine) =
 
 // Hybrid algorithm that runs the brute force algorithm on part of the input
 // jobs, and does the rest with ordered scheduling
+// Running time: O(((1-ε)n)! + (εn)^2)
 let ptas: (array(job), int, float) => array(machine) = (jobs, m, eps) => {
   let jobsCopy = Array.copy(jobs); // don't modify the input array
   Array.fast_sort((job1, job2) => job2 - job1, jobsCopy);
 
   // Partition the array of jobs into a brute force part and a greedy part,
-  // where the proportion is determined by a parameter epsilon
+  // where the proportion (brute force) : greedy = (1 - eps) : eps
   let n = Array.length(jobs);
-  let bfJobsLength = (float_of_int(n) *. eps)->ceil->int_of_float;
-  let bfJobs = Array.sub(jobs, 0, bfJobsLength);
-  let greedyJobs = Array.sub(jobs, bfJobsLength, n - bfJobsLength);
+  let greedyJobsLength = (float_of_int(n) *. eps)->floor->int_of_float;
+  let bfJobs = Array.sub(jobs, 0, n - greedyJobsLength);
+  let greedyJobs = Array.sub(jobs, n - greedyJobsLength, greedyJobsLength);
 
   let bfMachines = bruteForce(bfJobs, m);
   greedyInternal(greedyJobs, bfMachines);

@@ -62,7 +62,7 @@ describe("LoadBalancing", () => {
     //   expect(LoadBalancing.ptas(jobs, m, 0.5)) |> toEqual(expectedResult);
     // });
 
-    test("case 1 optimal (eps=1.0)", () => {
+    test("case 1 optimal (eps=0.0)", () => {
       let jobs = [|1, 2, 3|];
       let m = 2;
       let expectedResult: array(LoadBalancing.machine) = [|
@@ -70,10 +70,10 @@ describe("LoadBalancing", () => {
         {id: 1, jobs: [3], load: 3},
       |];
 
-      expect(LoadBalancing.ptas(jobs, m, 1.0)) |> toEqual(expectedResult);
+      expect(LoadBalancing.ptas(jobs, m, 0.0)) |> toEqual(expectedResult);
     });
 
-    test("case 2 optimal (eps=1.0)", () => {
+    test("case 2 optimal (eps=0.0)", () => {
       let jobs = [|2, 3, 2, 2, 3|];
       let m = 2;
       let expectedResult: array(LoadBalancing.machine) = [|
@@ -81,7 +81,7 @@ describe("LoadBalancing", () => {
         {id: 1, jobs: [3, 3], load: 6},
       |];
 
-      expect(LoadBalancing.ptas(jobs, m, 1.0)) |> toEqual(expectedResult);
+      expect(LoadBalancing.ptas(jobs, m, 0.0)) |> toEqual(expectedResult);
     });
   });
 });
