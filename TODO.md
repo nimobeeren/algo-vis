@@ -9,3 +9,4 @@
 - number input improvements:
   - hold mouse to change fast
   - focus input when clicking buttons (to allow typing)
+- prevent horizontal scroll with 5 machines on narrow screens
