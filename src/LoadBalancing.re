@@ -97,19 +97,32 @@ let greedyInternal: (array(job), array(machine)) => array(machine) =
     // Assign each job to the machine with smallest load
     Array.iter(
       job => {
+        // Find the index of the machine with smallest load
         // TODO: machine with smallest load could be maintained using a min-heap,
-        // which would be faster than sorting the array every time
-        Array.fast_sort((a, b) => a.load - b.load, machines);
-        machines[0] = assign(job, machines[0]);
+        // which would be faster than finding the minimum in the array every time
+        let index = ref(-1);
+        let minimum = ref(max_int);
+        Array.iteri(
+          (i, machine) =>
+            if (machine.load < minimum^) {
+              index := i;
+              minimum := machine.load;
+            },
+          machines,
+        );
+
+        // Assign job to machine with smallest load
+        machines[index^] = assign(job, machines[index^]);
       },
       jobs,
     );
+    
     machines;
   };
 
 // Greedy algorithm that assigns each job to the machine with the smallest load
 // at that time.
-// Running time: O(n^2 log n)
+// Running time: O(n^2)
 let greedy: (array(job), int) => array(machine) =
   (jobs, m) => {
     let machines = Array.init(m, createMachine);
@@ -169,17 +182,18 @@ let bruteForce: (array(job), int) => array(machine) =
 
 // Hybrid algorithm that runs the brute force algorithm on part of the input
 // jobs, and does the rest with ordered scheduling
-let ptas: (array(job), int, float) => array(machine) = (jobs, m, eps) => {
-  let jobsCopy = Array.copy(jobs); // don't modify the input array
-  Array.fast_sort((job1, job2) => job2 - job1, jobsCopy);
+let ptas: (array(job), int, float) => array(machine) =
+  (jobs, m, eps) => {
+    let jobsCopy = Array.copy(jobs); // don't modify the input array
+    Array.fast_sort((job1, job2) => job2 - job1, jobsCopy);
 
-  // Partition the array of jobs into a brute force part and a greedy part,
-  // where the proportion is determined by a parameter epsilon
-  let n = Array.length(jobs);
-  let bfJobsLength = (float_of_int(n) *. eps)->ceil->int_of_float;
-  let bfJobs = Array.sub(jobs, 0, bfJobsLength);
-  let greedyJobs = Array.sub(jobs, bfJobsLength, n - bfJobsLength);
+    // Partition the array of jobs into a brute force part and a greedy part,
+    // where the proportion is determined by a parameter epsilon
+    let n = Array.length(jobs);
+    let bfJobsLength = (float_of_int(n) *. eps)->ceil->int_of_float;
+    let bfJobs = Array.sub(jobs, 0, bfJobsLength);
+    let greedyJobs = Array.sub(jobs, bfJobsLength, n - bfJobsLength);
 
-  let bfMachines = bruteForce(bfJobs, m);
-  greedyInternal(greedyJobs, bfMachines);
-};
+    let bfMachines = bruteForce(bfJobs, m);
+    greedyInternal(greedyJobs, bfMachines);
+  };
