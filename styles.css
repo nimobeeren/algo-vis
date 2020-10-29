@@ -191,6 +191,9 @@ section .barplot {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
+  text-transform: none;
+  font-weight: 600;
+  letter-spacing: 2px;
 }
 
 .inline-input__label span {

@@ -103,8 +103,7 @@ module Home = {
                          id="epsilon-label"
                          htmlFor="epsilon"
                          className="inline-input__label">
-                         <Icons.Epsilon />
-                         <span> {React.string("=")} </span>
+                        {React.string({js|ε =|js})}
                        </label>
                        <FloatNumberInput
                          id="epsilon"
