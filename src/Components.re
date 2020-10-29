@@ -88,7 +88,17 @@ module NumberInput = {
         max={Js.String.make(max)}
         onChange={event => {
           let newValue = ReactEvent.Form.target(event)##value;
-          onChange(newValue == "" ? 0 : int_of_string(newValue));
+
+          // This will do nothing (i.e. prevent input) if int_of_string fails
+          switch (int_of_string(newValue)) {
+          | intValue =>
+            let minValue = getOptionValue(min, min_int);
+            let maxValue = getOptionValue(max, max_int);
+            if (minValue <= intValue && intValue <= maxValue) {
+              onChange(intValue);
+            };
+          | exception _ => ()
+          };
         }}
       />
       <div className="number-input__buttons" ariaHidden=true>
@@ -134,7 +144,7 @@ module NumberInput = {
 // Shameless copy of NumberInput, but works only with float values
 module FloatNumberInput = {
   [@react.component]
-  let make = (~value, ~id=?, ~ariaLabelledby=?, ~min=?, ~max=?, ~onChange) => {
+  let make = (~value, ~id=?, ~ariaLabelledby=?, ~min=?, ~max=?, ~step=?, ~onChange) => {
     <div className="number-input tube tube--bottom" role="presentation">
       <input
         type_="number"
@@ -143,9 +153,20 @@ module FloatNumberInput = {
         ariaLabelledby={getOptionValue(ariaLabelledby, "")}
         min={Js.String.make(min)}
         max={Js.String.make(max)}
+        step={getOptionValue(step, 1.0)}
         onChange={event => {
           let newValue = ReactEvent.Form.target(event)##value;
-          onChange(newValue == "" ? 0.0 : float_of_string(newValue));
+
+          // This will do nothing (i.e. prevent input) if float_of_string fails
+          switch (float_of_string(newValue)) {
+          | floatValue =>
+            let minValue = getOptionValue(min, min_float);
+            let maxValue = getOptionValue(max, max_float);
+            if (minValue <= floatValue && floatValue <= maxValue) {
+              onChange(floatValue);
+            };
+          | exception _ => ()
+          };
         }}
       />
       <div className="number-input__buttons" ariaHidden=true>
