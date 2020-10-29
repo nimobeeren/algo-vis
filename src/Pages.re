@@ -118,7 +118,7 @@ module Home = {
                    : React.null}
               </div>
               <div className="group__bottom-text">
-                <p role="note">
+                <p role="note" className="running-time">
                   {React.string("Running time: ")}
                   <span
                     dangerouslySetInnerHTML={

@@ -173,6 +173,10 @@ section .barplot {
   grid-gap: 8px;
 }
 
+.running-time span {
+  display: inline-block;
+}
+
 .algo-config {
   display: grid;
   grid-auto-flow: row;
