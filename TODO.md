@@ -1,6 +1,6 @@
-- implement brute force/PTAS
-- unit tests for load balancing algos
-- set correct running time/approx ratio for different algos
+- README
+- more tests
+  - create toMatchMachines matcher
 - run algo async
   - time out after a while
   - reduce restrictions on input
