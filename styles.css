@@ -173,6 +173,30 @@ section .barplot {
   grid-gap: 8px;
 }
 
+.algo-config {
+  display: grid;
+  grid-auto-flow: row;
+  grid-gap: 8px;
+}
+
+.inline-input {
+  display: grid;
+  justify-content: start;
+  align-items: center;
+  grid-auto-flow: column;
+  grid-gap: 8px;
+}
+
+.inline-input__label {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.inline-input__label span {
+  margin-left: 8px;
+}
+
 .job-inputs {
   display: grid;
   grid-auto-flow: row;

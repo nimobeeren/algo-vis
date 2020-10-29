@@ -6,6 +6,7 @@ module Home = {
   [@react.component]
   let make = () => {
     let (algo, setAlgo) = React.useState(() => LoadBalancing.Greedy);
+    let (epsilon, setEpsilon) = React.useState(() => 0.5);
     let (numMachines, setNumMachines) = React.useState(() => 4);
     let (jobs, setJobs) = React.useState(() => [|1, 1, 2, 2, 3, 4|]);
     let (numJobs, setNumJobs) = React.useState(() => Array.length(jobs));
@@ -35,7 +36,7 @@ module Home = {
       (numJobs, jobs),
     );
 
-    React.useEffect3(
+    React.useEffect4(
       () => {
         let startTime = now();
 
@@ -43,7 +44,7 @@ module Home = {
           switch (algo) {
           | Greedy => Some(LoadBalancing.greedy(jobs, numMachines))
           | Ordered => Some(LoadBalancing.ordered(jobs, numMachines))
-          | PTAS => Some(LoadBalancing.ptas(jobs, numMachines, 0.5)) // TODO: input for eps
+          | PTAS => Some(LoadBalancing.ptas(jobs, numMachines, epsilon))
           | BruteForce => Some(LoadBalancing.bruteForce(jobs, numMachines))
           };
         setResult(_ => newResult);
@@ -60,7 +61,7 @@ module Home = {
 
         None;
       },
-      (algo, jobs, numMachines),
+      (algo, jobs, numMachines, epsilon),
     );
 
     <main>
@@ -72,28 +73,50 @@ module Home = {
               <label id="algorithm-label" htmlFor="algorithm">
                 {React.string("Algorithm")}
               </label>
-              <Select
-                id="algorithm"
-                value={LoadBalancing.algoToString(algo)}
-                onChange={event => {
-                  let newAlgo =
-                    LoadBalancing.stringToAlgo(
-                      ReactEvent.Form.target(event)##value,
-                    );
-                  switch (newAlgo) {
-                  | Some(algo) => setAlgo(_ => algo)
-                  | None => () // got invalid value, so don't set state
-                  };
-                }}>
-                <option value="greedy"> {React.string("Greedy")} </option>
-                <option value="ordered">
-                  {React.string("Sorted Greedy")}
-                </option>
-                <option value="ptas"> {React.string("PTAS")} </option>
-                <option value="bruteForce">
-                  {React.string("Brute Force")}
-                </option>
-              </Select>
+              <div className="algo-config">
+                <Select
+                  id="algorithm"
+                  value={LoadBalancing.algoToString(algo)}
+                  onChange={event => {
+                    let newAlgo =
+                      LoadBalancing.stringToAlgo(
+                        ReactEvent.Form.target(event)##value,
+                      );
+                    switch (newAlgo) {
+                    | Some(algo) => setAlgo(_ => algo)
+                    | None => () // got invalid value, so don't set state
+                    };
+                  }}>
+                  <option value="greedy"> {React.string("Greedy")} </option>
+                  <option value="ordered">
+                    {React.string("Sorted Greedy")}
+                  </option>
+                  <option value="ptas"> {React.string("PTAS")} </option>
+                  <option value="bruteForce">
+                    {React.string("Brute Force")}
+                  </option>
+                </Select>
+                {algo == PTAS
+                   ? {
+                     <div className="inline-input">
+                       <label
+                         id="epsilon-label"
+                         htmlFor="epsilon"
+                         className="inline-input__label">
+                         <Icons.Epsilon />
+                         <span> {React.string("=")} </span>
+                       </label>
+                       <FloatNumberInput
+                         id="epsilon"
+                         value=epsilon
+                         min=0.0
+                         max=1.0
+                         onChange={newValue => {setEpsilon(_ => newValue)}}
+                       />
+                     </div>;
+                   }
+                   : React.null}
+              </div>
               <div className="group__bottom-text">
                 <p role="note">
                   {React.string("Running time: ")}
@@ -121,7 +144,7 @@ module Home = {
                 id="num-machines"
                 value=numMachines
                 min=1
-                max=4
+                max=5
                 onChange={newValue => {setNumMachines(_ => newValue)}}
               />
             </div>
