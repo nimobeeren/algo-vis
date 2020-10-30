@@ -1,4 +1,3 @@
-- README
 - more tests
   - create toMatchMachines matcher
 - run algo async
