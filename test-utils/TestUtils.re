@@ -10,9 +10,12 @@ type simpleMachine = list(LoadBalancing.job);
 type partialMachine = {jobs: list(LoadBalancing.job)};
 
 // Jest matcher that checks if an array of machines have the expected jobs.
-// This is an attempt to ignore implementation details, such as machine ID
-// and other internal values in the machine.
+// This is an attempt to ignore implementation details, such as machine ID and
+// other internal values in the machine.
 // Hopefully, this will make the tests a little more resilient to breaking.
+// It currently fails when jobs/machines are in different order between actual
+// and expected machines. Ideally, this would still pass, since their order
+// does not affect the quality of the solution.
 let toMatchMachines =
     (expectedMachines: array(simpleMachine), actualMachinesAssertion) => {
   // Hacky way to get the value out of the Jest assertion
