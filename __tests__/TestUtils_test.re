@@ -4,11 +4,11 @@ open TestUtils;
 
 describe("toMatchMachines()", () => {
   test("passes when actual and expected match", () => {
-    let actualMachines: array(simpleMachine) = [|
+    let expectedMachines: array(simpleMachine) = [|
       {jobs: [1, 2]},
     |];
 
-    let expectedMachines: array(LoadBalancing.machine) = [|
+    let actualMachines: array(LoadBalancing.machine) = [|
       {id: 0, jobs: [1, 2], load: 3},
     |];
 
@@ -16,11 +16,11 @@ describe("toMatchMachines()", () => {
   })
 
   test("passes when actual and expected differ only in implementation details", () => {
-    let actualMachines: array(simpleMachine) = [|
+    let expectedMachines: array(simpleMachine) = [|
       {jobs: [1, 2]},
     |];
 
-    let expectedMachines: array(LoadBalancing.machine) = [|
+    let actualMachines: array(LoadBalancing.machine) = [|
       {id: -1, jobs: [1, 2], load: 42},
     |];
 
@@ -28,11 +28,11 @@ describe("toMatchMachines()", () => {
   })
 
   test("fails when actual and expected do not match", () => {
-    let actualMachines: array(simpleMachine) = [|
+    let expectedMachines: array(simpleMachine) = [|
       {jobs: [1, 2]},
     |];
 
-    let expectedMachines: array(LoadBalancing.machine) = [|
+    let actualMachines: array(LoadBalancing.machine) = [|
       {id: 0, jobs: [1, 7], load: 8},
     |];
 
