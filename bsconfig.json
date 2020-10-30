@@ -11,6 +11,10 @@
     {
       "dir": "__tests__",
       "type": "dev"
+    },
+    {
+      "dir": "test-utils",
+      "type": "dev"
     }
   ],
   "bsc-flags": ["-bs-super-errors", "-bs-no-version-header"],
