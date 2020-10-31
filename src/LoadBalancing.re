@@ -151,42 +151,67 @@ let ordered: (array(job), int) => array(machine) =
 // Brute force algorithm that tries all possible assignments of jobs to machines
 // and returns a solution with minimum makespan.
 // Running time: O(n!)
-// TODO: prune when makespan is larger than best
 // TODO: prune equivalent states
 let bruteForce: (array(job), int) => array(machine) =
   (jobs, m) => {
     let machines = Array.init(m, createMachine);
     let jobsList = Array.to_list(jobs);
 
-    let rec bruteForceRec = (jobsList, machines) =>
-      switch (jobsList) {
-      | [] => machines
-      | [head, ...tail] =>
-        let bestMachines = ref([||]);
-        let bestMakespan = ref(max_int);
+    let recursiveCalls = ref(0);
+    let arrayCopies = ref(0);
 
-        // This is essentially just a for loop, not really functional style
-        Array.iteri(
-          (i, _) => {
-            machines[i] = assign(head, machines[i]);
+    // bestMakespan is the minimum makespan of a complete solution found so far
+    let rec bruteForceRec = (jobsList, machines, bestMakespan) => {
+      recursiveCalls := recursiveCalls^ + 1;
+      // If the makespan of current machines is already larger than the best
+      // makespan so far, don't go deeper into this branch
+      if (getMakespan(machines) > bestMakespan) {
+        (machines, max_int);
+      } else {
+        switch (jobsList) {
+        // No more jobs to assign
+        | [] => (machines, getMakespan(machines))
+        // Continue assigning jobs
+        | [nextJob, ...restJobs] =>
+          // These variables maintain the best solution found in this branch,
+          // but only if it is better than the global best
+          let bestMachinesLocal = ref([||]);
+          let bestMakespanLocal = ref(max_int);
 
-            let result = bruteForceRec(tail, machines);
+          // Try assigning the next job to each machine and recurse
+          // This is essentially just a for loop with mutation, not really "pure"
+          Array.iteri(
+            (i, _) => {
+              machines[i] = assign(nextJob, machines[i]);
 
-            let makespan = getMakespan(result);
-            if (makespan < bestMakespan^) {
-              bestMachines := Array.copy(result);
-              bestMakespan := makespan;
-            };
+              let (newMachines, newMakespan) =
+                bruteForceRec(
+                  restJobs,
+                  machines,
+                  min(bestMakespan, bestMakespanLocal^),
+                );
 
-            machines[i] = pop(machines[i]);
-          },
-          machines,
-        );
+              if (newMakespan < min(bestMakespan, bestMakespanLocal^)) {
+                // This solution is the best so far
+                arrayCopies := arrayCopies^ + 1;
+                bestMachinesLocal := Array.copy(newMachines);
+                bestMakespanLocal := newMakespan;
+              };
 
-        bestMachines^;
+              machines[i] = pop(machines[i]);
+            },
+            machines,
+          );
+
+          (bestMachinesLocal^, bestMakespanLocal^);
+        };
       };
+    };
 
-    bruteForceRec(jobsList, machines);
+    let (bestMachines, _) = bruteForceRec(jobsList, machines, max_int);
+    Js.log(recursiveCalls^);
+    Js.log(arrayCopies^);
+    bestMachines;
   };
 
 // Hybrid algorithm that runs the brute force algorithm on part of the input
