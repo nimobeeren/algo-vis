@@ -1,4 +1,3 @@
-- more tests
 - run algo async
   - time out after a while
   - reduce restrictions on input
