@@ -63,8 +63,6 @@ let assign: (job, machine) => machine =
 
 // Produces a machine that is identical to the given machine, but with one job of the given
 // size removed. If no such job is found, the jobs are unchanged.
-// TODO: we can probably just set jobs to Array.tl(machines.jobs) since we only ever unassign
-// the first job in the list
 let unassign: (job, machine) => machine =
   (job, machine) => {
     let isFound = ref(false);
@@ -81,6 +79,16 @@ let unassign: (job, machine) => machine =
       );
 
     {...machine, jobs: newJobs, load: machine.load - job};
+  };
+
+// Produces a machine that is identical to the given machine, but with its
+// first (most recently added) job removed.
+let pop: machine => machine =
+  machine => {
+    switch (machine.jobs) {
+    | [] => machine
+    | [head, ...tail] => {...machine, jobs: tail, load: machine.load - head}
+    };
   };
 
 // The makespan is the maximum load across all machines
@@ -170,7 +178,7 @@ let bruteForce: (array(job), int) => array(machine) =
               bestMakespan := makespan;
             };
 
-            machines[i] = unassign(head, machines[i]);
+            machines[i] = pop(machines[i]);
           },
           machines,
         );
@@ -195,7 +203,8 @@ let ptas: (array(job), int, float) => array(machine) =
     let n = Array.length(jobsCopy);
     let greedyJobsLength = (float_of_int(n) *. eps)->floor->int_of_float;
     let bfJobs = Array.sub(jobsCopy, 0, n - greedyJobsLength);
-    let greedyJobs = Array.sub(jobsCopy, n - greedyJobsLength, greedyJobsLength);
+    let greedyJobs =
+      Array.sub(jobsCopy, n - greedyJobsLength, greedyJobsLength);
 
     let bfMachines = bruteForce(bfJobs, m);
     greedyInternal(greedyJobs, bfMachines);
