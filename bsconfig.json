@@ -1,19 +1,13 @@
 {
+  "$schema": "https://raw.githubusercontent.com/rescript-lang/rescript-compiler/master/docs/docson/build-schema.json",
   "name": "algo-vis",
   "reason": {
     "react-jsx": 3
   },
   "sources": [
-    {
-      "dir" : "src",
-      "subdirs" : true
-    },
+    "src",
     {
       "dir": "__tests__",
-      "type": "dev"
-    },
-    {
-      "dir": "test-utils",
       "type": "dev"
     }
   ],

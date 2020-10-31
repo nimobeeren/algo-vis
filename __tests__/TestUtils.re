@@ -1,3 +1,9 @@
+// Note: sources with "type": "dev" in bsconfig are not exposed to other dev
+// modules, so this TestUtils module must either be in the same directory as
+// __tests__ (which it is), or it must be in a non-dev module. However,
+// if we made it a non-dev module then we can't access Jest since it is a
+// dev-dependency.
+
 open Jest;
 open Expect;
 

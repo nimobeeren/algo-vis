@@ -1,8 +1,5 @@
 open Jest;
 open Expect;
-// It seems like the reason-vscode extension doesn't know how to resolve
-// modules in other directories, which breaks error highlighting in the rest of
-// the file :(
 open TestUtils;
 
 describe("toMatchMachines()", () => {
