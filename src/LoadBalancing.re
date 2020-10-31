@@ -130,7 +130,7 @@ let greedy: (array(job), int) => array(machine) =
     greedyInternal(jobs, machines);
   };
 
-// Same as greedy(), but sorts the jobs in descending order first.
+// Same as greedy(), but sorts the jobs in decreasing order first.
 // Running time: O(n^2)
 let ordered: (array(job), int) => array(machine) =
   (jobs, m) => {
@@ -182,19 +182,20 @@ let bruteForce: (array(job), int) => array(machine) =
   };
 
 // Hybrid algorithm that runs the brute force algorithm on part of the input
-// jobs, and does the rest with ordered scheduling
+// jobs, and does the rest with sorted greedy scheduling.
 // Running time: O(((1-ε)n)! + (εn)^2)
 let ptas: (array(job), int, float) => array(machine) =
   (jobs, m, eps) => {
+    // Sort jobs in decreasing order
     let jobsCopy = Array.copy(jobs); // don't modify the input array
     Array.fast_sort((job1, job2) => job2 - job1, jobsCopy);
 
     // Partition the array of jobs into a brute force part and a greedy part,
     // where the proportion (brute force) : greedy = (1 - eps) : eps
-    let n = Array.length(jobs);
+    let n = Array.length(jobsCopy);
     let greedyJobsLength = (float_of_int(n) *. eps)->floor->int_of_float;
-    let bfJobs = Array.sub(jobs, 0, n - greedyJobsLength);
-    let greedyJobs = Array.sub(jobs, n - greedyJobsLength, greedyJobsLength);
+    let bfJobs = Array.sub(jobsCopy, 0, n - greedyJobsLength);
+    let greedyJobs = Array.sub(jobsCopy, n - greedyJobsLength, greedyJobsLength);
 
     let bfMachines = bruteForce(bfJobs, m);
     greedyInternal(greedyJobs, bfMachines);
