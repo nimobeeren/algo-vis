@@ -16,7 +16,18 @@ describe("LoadBalancing", () => {
       |];
 
       expect(LoadBalancing.greedy(jobs, m)) |> toMatchMachines(expectedResult);
-    })
+    });
+
+    test("case 2 suboptimal", () => {
+      let jobs = [|2, 3, 2, 2, 3|];
+      let m = 2;
+      let expectedResult = [|
+        [3, 2, 2],
+        [2, 3],
+      |];
+
+      expect(LoadBalancing.greedy(jobs, m)) |> toMatchMachines(expectedResult);
+    });
   });
 
   describe("bruteForce()", () => {
