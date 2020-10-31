@@ -1,5 +1,4 @@
 - more tests
-  - create toMatchMachines matcher
 - run algo async
   - time out after a while
   - reduce restrictions on input
@@ -9,4 +8,3 @@
   - hold mouse to change fast
   - focus input when clicking buttons (to allow typing)
 - prevent horizontal scroll with 5 machines on narrow screens
-dsafsd
