@@ -157,22 +157,22 @@ let bruteForce: (array(job), int) => array(machine) =
         let bestMachines = ref([||]);
         let bestMakespan = ref(max_int);
 
-        let machinesCopy = Array.copy(machines);
         // This is essentially just a for loop, not really functional style
         Array.iteri(
           (i, _) => {
-            machinesCopy[i] = assign(head, machinesCopy[i]);
+            machines[i] = assign(head, machines[i]);
 
-            let result = bruteForceRec(tail, machinesCopy);
+            let result = bruteForceRec(tail, machines);
+
             let makespan = getMakespan(result);
             if (makespan < bestMakespan^) {
               bestMachines := Array.copy(result);
               bestMakespan := makespan;
             };
 
-            machinesCopy[i] = unassign(head, machinesCopy[i]);
+            machines[i] = unassign(head, machines[i]);
           },
-          machinesCopy,
+          machines,
         );
 
         bestMachines^;
