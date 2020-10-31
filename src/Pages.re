@@ -11,7 +11,7 @@ module Home = {
     let (jobs, setJobs) = React.useState(() => [|1, 1, 2, 2, 3, 4|]);
     let (numJobs, setNumJobs) = React.useState(() => Array.length(jobs));
     let (result, setResult) = React.useState(() => None);
-    let (makespan, setMakespan) = React.useState(() => None); // TODO: move out of state
+    let (makespan, setMakespan) = React.useState(() => None);
     let (runningTime, setRunningTime) = React.useState(() => None);
 
     React.useEffect2(
