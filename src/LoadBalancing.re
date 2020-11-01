@@ -157,15 +157,11 @@ let bruteForce: (array(job), int) => array(machine) =
     let machines = Array.init(m, createMachine);
     let jobsList = Array.to_list(jobs);
 
-    let recursiveCalls = ref(0);
-    let arrayCopies = ref(0);
-
     // bestMakespan is the minimum makespan of a complete solution found so far
-    let rec bruteForceRec = (jobsList, machines, bestMakespan) => {
-      recursiveCalls := recursiveCalls^ + 1;
-      // If the makespan of current machines is already larger than the best
-      // makespan so far, don't go deeper into this branch
-      if (getMakespan(machines) > bestMakespan) {
+    let rec bruteForceRec = (jobsList, machines, bestMakespan) =>
+      // If the makespan of current machines is already at least as largeas the
+      // best makespan so far, so don't go deeper into this branch
+      if (getMakespan(machines) >= bestMakespan) {
         (machines, max_int);
       } else {
         switch (jobsList) {
@@ -193,7 +189,6 @@ let bruteForce: (array(job), int) => array(machine) =
 
               if (newMakespan < min(bestMakespan, bestMakespanLocal^)) {
                 // This solution is the best so far
-                arrayCopies := arrayCopies^ + 1;
                 bestMachinesLocal := Array.copy(newMachines);
                 bestMakespanLocal := newMakespan;
               };
@@ -206,11 +201,8 @@ let bruteForce: (array(job), int) => array(machine) =
           (bestMachinesLocal^, bestMakespanLocal^);
         };
       };
-    };
 
     let (bestMachines, _) = bruteForceRec(jobsList, machines, max_int);
-    Js.log(recursiveCalls^);
-    Js.log(arrayCopies^);
     bestMachines;
   };
 
