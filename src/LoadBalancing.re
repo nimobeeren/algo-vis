@@ -155,7 +155,14 @@ let ordered: (array(job), int) => array(machine) =
 let bruteForce: (array(job), int) => array(machine) =
   (jobs, m) => {
     let machines = Array.init(m, createMachine);
-    let jobsList = Array.to_list(jobs);
+
+    // Sort the jobs in decreasing order. This doesn't affect the approximation
+    // ratio (since brute force is always optimal) but it does seem to improve
+    // running time significantly!
+    let jobsCopy = Array.copy(jobs); // don't modify the input array
+    Array.fast_sort((job1, job2) => job2 - job1, jobsCopy);
+
+    let jobsList = Array.to_list(jobsCopy);
 
     // bestMakespan is the minimum makespan of a complete solution found so far
     let rec bruteForceRec = (jobsList, machines, bestMakespan) =>
