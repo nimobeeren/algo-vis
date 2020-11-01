@@ -22,6 +22,6 @@ let durationToString: float => string = millis => {
     Js.Float.toString(floor(millis)) ++ " ms";
   } else {
     let secs = millis /. 1000.0;
-    Js.Float.toString(floor(secs)) ++ " s";
+    Js.Float.toPrecisionWithPrecision(secs, ~digits=3) ++ " s";
   }
 };
