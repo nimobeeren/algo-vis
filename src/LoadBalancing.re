@@ -99,6 +99,24 @@ let getMakespan: array(machine) => int =
     min_int,
   );
 
+// Checks whether the machines are in order of non-increasing load.
+let areMachinesNonIncreasing = machines => {
+  // Checks whether machines[i..j-1] are in order of non-increasing load
+  let rec helper = (i, j) =>
+    if (i + 1 >= j) {
+      true;
+    } else {
+      // i + 1 < j
+      if (machines[i].load < machines[i + 1].load) {
+        false;
+      } else {
+        helper(i + 1, j);
+      }
+    };
+
+  helper(0, Array.length(machines));
+};
+
 // Function that is used internally by e.g. greedy(), which takes an array of
 // machines instead of creating them when called
 let greedyInternal: (array(job), array(machine)) => array(machine) =
@@ -163,9 +181,14 @@ let bruteForce: (array(job), int) => array(machine) =
     // bestMakespan is the minimum makespan of a complete solution found so far
     let rec bruteForceRec = (jobsList, machines, bestMakespan) => {
       recursiveCalls := recursiveCalls^ + 1;
+
       // If the makespan of current machines is already larger than the best
       // makespan so far, don't go deeper into this branch
-      if (getMakespan(machines) > bestMakespan) {
+      let shouldPrune =
+        !areMachinesNonIncreasing(machines)
+        || getMakespan(machines) > bestMakespan;
+
+      if (shouldPrune) {
         (machines, max_int);
       } else {
         switch (jobsList) {
@@ -210,7 +233,7 @@ let bruteForce: (array(job), int) => array(machine) =
 
     let (bestMachines, _) = bruteForceRec(jobsList, machines, max_int);
     Js.log(recursiveCalls^);
-    Js.log(arrayCopies^);
+    // Js.log(arrayCopies^);
     bestMachines;
   };
 
