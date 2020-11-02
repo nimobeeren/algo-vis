@@ -1,6 +1,6 @@
 # Load Balancing Visualization ⚖️
 
-<div align="center" style="margin-top: 24px; margin-bottom: 24px;">
+<div align="center">
   <a href="https://algo-vis.vercel.app/">
     <img alt="Load Balancing Visualization" src="https://raw.githubusercontent.com/nimobeeren/algo-vis/master/images/screenshot.png" height="250px" />
   </a>
