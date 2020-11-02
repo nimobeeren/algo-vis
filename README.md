@@ -2,7 +2,7 @@
 
 <div align="center">
   <a href="https://algo-vis.vercel.app/">
-    <img alt="Load Balancing Visualization" src="https://raw.githubusercontent.com/nimobeeren/algo-vis/master/images/screenshot.png" height="250px" />
+    <img alt="Visualization of the computed solution to the load balancing problem" src="https://raw.githubusercontent.com/nimobeeren/algo-vis/master/images/screenshot.png" height="250px" />
   </a>
 </div>
 
